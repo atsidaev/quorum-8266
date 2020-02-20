@@ -1,0 +1,1096 @@
+EESchema Schematic File Version 4
+LIBS:esp8266-zxspectrum-cache
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 2050 1700 2    50   Input ~ 0
+KB_ROW4
+Text GLabel 1100 1700 0    50   Input ~ 0
+KB_ROW3
+Text GLabel 2050 1600 2    50   Input ~ 0
+KB_ROW2
+Text GLabel 1100 1600 0    50   Input ~ 0
+KB_ROW1
+Wire Wire Line
+	2750 6950 2550 6950
+Connection ~ 2750 6950
+Wire Wire Line
+	2750 6850 2750 6950
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D18
+U 1 1 5EC75DB3
+P 2750 6750
+F 0 "D18" V 2750 6672 45  0000 R CNN
+F 1 "DIODE-1N4148" V 2792 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2750 6950 20  0001 C CNN
+F 3 "" H 2750 6750 50  0001 C CNN
+F 4 "" V 2834 6828 60  0000 L CNN "Field4"
+	1    2750 6750
+	0    1    1    0   
+$EndComp
+Text GLabel 3950 6050 1    50   Input ~ 0
+KB_COL6
+Wire Wire Line
+	2650 5600 2000 5600
+Wire Wire Line
+	2650 6050 2650 5600
+$Comp
+L 4xxx:4081 U4
+U 4 1 5EC4A4BC
+P 2750 6350
+F 0 "U4" V 2704 6538 50  0000 L CNN
+F 1 "4081" V 2795 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 2750 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 2750 6350 50  0001 C CNN
+	4    2750 6350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3200 5500 3200 6050
+Wire Wire Line
+	2000 5500 3200 5500
+Wire Wire Line
+	3750 5400 3750 6050
+Wire Wire Line
+	2000 5400 3750 5400
+Wire Wire Line
+	4300 5300 4300 6050
+Wire Wire Line
+	2000 5300 4300 5300
+Wire Wire Line
+	4850 5200 4850 6050
+Wire Wire Line
+	2000 5200 4850 5200
+Wire Wire Line
+	5400 5100 5400 6050
+Wire Wire Line
+	2000 5100 5400 5100
+Wire Wire Line
+	5950 5000 5950 6050
+Wire Wire Line
+	2000 5000 5950 5000
+Wire Wire Line
+	6500 4900 6500 6050
+Wire Wire Line
+	2000 4900 6500 4900
+Connection ~ 8250 6250
+Wire Wire Line
+	8250 6300 8250 6250
+Wire Wire Line
+	8950 6150 8950 6250
+$Comp
+L Device:R R8
+U 1 1 5EBC215F
+P 8950 6000
+F 0 "R8" V 9050 6000 50  0000 C CNN
+F 1 "10K" V 8950 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 8880 6000 50  0001 C CNN
+F 3 "~" H 8950 6000 50  0001 C CNN
+	1    8950 6000
+	-1   0    0    1   
+$EndComp
+Text GLabel 8550 5850 1    50   Input ~ 0
+KB_COL6
+Text GLabel 4500 6050 1    50   Input ~ 0
+KB_COL5
+Text GLabel 5050 6050 1    50   Input ~ 0
+KB_COL4
+Text GLabel 5600 6050 1    50   Input ~ 0
+KB_COL3
+Text GLabel 6150 6050 1    50   Input ~ 0
+KB_COL2
+Text GLabel 6700 6050 1    50   Input ~ 0
+KB_COL1
+Text GLabel 3400 6050 1    50   Input ~ 0
+KB_COL_JOY
+Text GLabel 10600 1350 2    50   Input ~ 0
+KB_COL6
+Text GLabel 10600 1050 2    50   Input ~ 0
+KB_COL5
+Text GLabel 8650 1950 2    50   Input ~ 0
+KB_COL4
+Text GLabel 8650 1650 2    50   Input ~ 0
+KB_COL3
+Text GLabel 8650 1350 2    50   Input ~ 0
+KB_COL2
+Text GLabel 8650 1050 2    50   Input ~ 0
+KB_COL1
+Wire Wire Line
+	9150 2050 9150 2650
+Connection ~ 9150 2650
+Wire Wire Line
+	9600 2050 9150 2050
+Connection ~ 9150 2050
+Wire Wire Line
+	9150 1950 9150 2050
+Wire Wire Line
+	9600 1950 9150 1950
+Connection ~ 9150 1950
+Wire Wire Line
+	9150 1750 9150 1950
+Wire Wire Line
+	9600 1750 9150 1750
+Connection ~ 9150 1750
+Wire Wire Line
+	9150 1650 9150 1750
+Wire Wire Line
+	9600 1650 9150 1650
+Connection ~ 9150 1650
+Wire Wire Line
+	9150 1350 9150 1650
+Wire Wire Line
+	9600 1350 9150 1350
+Text GLabel 9600 1450 0    50   Input ~ 0
+KB_D5*
+Text GLabel 9600 1150 0    50   Input ~ 0
+KB_D4*
+Text GLabel 9600 1050 0    50   Input ~ 0
+KB_D4
+Text GLabel 7650 1650 0    50   Input ~ 0
+KB_D2
+Text GLabel 7650 1950 0    50   Input ~ 0
+KB_D3
+Text GLabel 7650 2050 0    50   Input ~ 0
+KB_D3*
+Text GLabel 7650 1750 0    50   Input ~ 0
+KB_D2*
+Text GLabel 7650 1450 0    50   Input ~ 0
+KB_D1*
+Text GLabel 7650 1350 0    50   Input ~ 0
+KB_D1
+Text GLabel 7650 1150 0    50   Input ~ 0
+KB_D0*
+Text GLabel 7650 1050 0    50   Input ~ 0
+KB_D0
+$Comp
+L power:+3.3V #PWR0122
+U 1 1 5EA7FF89
+P 7600 750
+F 0 "#PWR0122" H 7600 600 50  0001 C CNN
+F 1 "+3.3V" H 7615 923 50  0000 C CNN
+F 2 "" H 7600 750 50  0001 C CNN
+F 3 "" H 7600 750 50  0001 C CNN
+	1    7600 750 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9150 2650 9550 2650
+Wire Wire Line
+	10100 2650 9550 2650
+Connection ~ 9550 2650
+Wire Wire Line
+	9550 2350 9550 2650
+Wire Wire Line
+	7600 2350 7600 2650
+Wire Wire Line
+	9550 2350 9600 2350
+Wire Wire Line
+	7650 2350 7600 2350
+Connection ~ 7600 2650
+$Comp
+L power:GND #PWR0123
+U 1 1 5EA513F0
+P 7600 2650
+F 0 "#PWR0123" H 7600 2400 50  0001 C CNN
+F 1 "GND" H 7500 2550 50  0000 C CNN
+F 2 "" H 7600 2650 50  0001 C CNN
+F 3 "" H 7600 2650 50  0001 C CNN
+	1    7600 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74LS157 U8
+U 1 1 5EA2CF88
+P 10100 1650
+F 0 "U8" H 10100 2731 50  0000 C CNN
+F 1 "74HC157" H 10100 2640 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 10100 1650 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS157" H 10100 1650 50  0001 C CNN
+	1    10100 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8150 2650 9150 2650
+Wire Wire Line
+	8150 2650 7600 2650
+Connection ~ 8150 2650
+Wire Wire Line
+	7600 750  8150 750 
+Wire Wire Line
+	8150 750  10100 750 
+Connection ~ 8150 750 
+$Comp
+L 74xx:74LS157 U7
+U 1 1 5EA266FD
+P 8150 1650
+F 0 "U7" H 8150 2731 50  0000 C CNN
+F 1 "74HC157" H 8150 2640 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 8150 1650 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS157" H 8150 1650 50  0001 C CNN
+	1    8150 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2750 6950 3300 6950
+Connection ~ 3300 6950
+Wire Wire Line
+	3300 6850 3300 6950
+Connection ~ 4400 6950
+Wire Wire Line
+	4400 6850 4400 6950
+Wire Wire Line
+	3300 6950 3850 6950
+Wire Wire Line
+	3850 6950 4400 6950
+Connection ~ 3850 6950
+Wire Wire Line
+	3850 6850 3850 6950
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D17
+U 1 1 5E96F350
+P 3300 6750
+F 0 "D17" V 3300 6672 45  0000 R CNN
+F 1 "DIODE-1N4148" V 3342 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 3300 6950 20  0001 C CNN
+F 3 "" H 3300 6750 50  0001 C CNN
+F 4 "" V 3384 6828 60  0000 L CNN "Field4"
+	1    3300 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D16
+U 1 1 5E96EB43
+P 3850 6750
+F 0 "D16" V 3850 6672 45  0000 R CNN
+F 1 "DIODE-1N4148" V 3892 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 3850 6950 20  0001 C CNN
+F 3 "" H 3850 6750 50  0001 C CNN
+F 4 "" V 3934 6828 60  0000 L CNN "Field4"
+	1    3850 6750
+	0    1    1    0   
+$EndComp
+Text GLabel 1100 1800 0    50   Input ~ 0
+KB_D5*
+Text GLabel 1100 1900 0    50   Input ~ 0
+KB_D4*
+Text GLabel 2050 1800 2    50   Input ~ 0
+KB_D3*
+Text GLabel 2050 1500 2    50   Input ~ 0
+KB_D2*
+Text GLabel 2050 1400 2    50   Input ~ 0
+KB_D1*
+Text GLabel 2050 1300 2    50   Input ~ 0
+KB_D0*
+Text GLabel 2050 1200 2    50   Input ~ 0
+KB_D4
+Text GLabel 2050 1100 2    50   Input ~ 0
+KB_D3
+Text GLabel 2050 1000 2    50   Input ~ 0
+KB_D2
+Text GLabel 2050 900  2    50   Input ~ 0
+KB_D1
+Text GLabel 2050 800  2    50   Input ~ 0
+KB_D0
+$Comp
+L 4xxx:4081 U4
+U 3 1 5E89B0B0
+P 3300 6350
+F 0 "U4" V 3254 6538 50  0000 L CNN
+F 1 "4081" V 3345 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 3300 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 3300 6350 50  0001 C CNN
+	3    3300 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L 4xxx:4081 U4
+U 2 1 5E8989E8
+P 3850 6350
+F 0 "U4" V 3804 6538 50  0000 L CNN
+F 1 "4081" V 3895 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 3850 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 3850 6350 50  0001 C CNN
+	2    3850 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L 4xxx:4081 U4
+U 1 1 5E890EFE
+P 4400 6350
+F 0 "U4" V 4354 6538 50  0000 L CNN
+F 1 "4081" V 4445 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 4400 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 4400 6350 50  0001 C CNN
+	1    4400 6350
+	0    1    1    0   
+$EndComp
+Text GLabel 8350 5850 1    50   Input ~ 0
+KB_COL5
+Text GLabel 8150 5850 1    50   Input ~ 0
+KB_COL4
+Text GLabel 7950 5850 1    50   Input ~ 0
+KB_COL3
+Text GLabel 7750 5850 1    50   Input ~ 0
+KB_COL2
+Text GLabel 7550 5850 1    50   Input ~ 0
+KB_COL1
+Text GLabel 8950 5850 1    50   Input ~ 0
+KB_COL_JOY
+Text GLabel 10800 5550 3    50   Input ~ 0
+KB_COL_JOY
+Text GLabel 8750 5850 1    50   Input ~ 0
+KB_COL_EXT
+Wire Wire Line
+	7750 6150 7750 6250
+Wire Wire Line
+	7750 6250 7950 6250
+Connection ~ 7950 6250
+Wire Wire Line
+	7950 6150 7950 6250
+Wire Wire Line
+	8250 6250 8350 6250
+Connection ~ 8350 6250
+Wire Wire Line
+	8350 6150 8350 6250
+Wire Wire Line
+	8350 6250 8550 6250
+Connection ~ 8550 6250
+Wire Wire Line
+	8550 6150 8550 6250
+Wire Wire Line
+	8950 6250 8750 6250
+Wire Wire Line
+	8550 6250 8750 6250
+Connection ~ 8750 6250
+Wire Wire Line
+	8750 6250 8750 6150
+Wire Wire Line
+	7950 6250 8150 6250
+Wire Wire Line
+	8150 6250 8250 6250
+Connection ~ 8150 6250
+Wire Wire Line
+	8150 6250 8150 6150
+Connection ~ 7750 6250
+Wire Wire Line
+	7550 6250 7750 6250
+Wire Wire Line
+	7550 6150 7550 6250
+$Comp
+L Device:R R7
+U 1 1 5E75355D
+P 8750 6000
+F 0 "R7" V 8850 6000 50  0000 C CNN
+F 1 "10K" V 8750 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 8680 6000 50  0001 C CNN
+F 3 "~" H 8750 6000 50  0001 C CNN
+	1    8750 6000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5E75408E
+P 7550 6000
+F 0 "R1" V 7650 6000 50  0000 C CNN
+F 1 "10K" V 7550 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7480 6000 50  0001 C CNN
+F 3 "~" H 7550 6000 50  0001 C CNN
+	1    7550 6000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5E753D06
+P 7750 6000
+F 0 "R2" V 7850 6000 50  0000 C CNN
+F 1 "10K" V 7750 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7680 6000 50  0001 C CNN
+F 3 "~" H 7750 6000 50  0001 C CNN
+	1    7750 6000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R6
+U 1 1 5E753126
+P 8550 6000
+F 0 "R6" V 8650 6000 50  0000 C CNN
+F 1 "10K" V 8550 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 8480 6000 50  0001 C CNN
+F 3 "~" H 8550 6000 50  0001 C CNN
+	1    8550 6000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 5E752CA0
+P 8350 6000
+F 0 "R5" V 8450 6000 50  0000 C CNN
+F 1 "10K" V 8350 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 8280 6000 50  0001 C CNN
+F 3 "~" H 8350 6000 50  0001 C CNN
+	1    8350 6000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 5E750836
+P 8150 6000
+F 0 "R4" V 8250 6000 50  0000 C CNN
+F 1 "10K" V 8150 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 8080 6000 50  0001 C CNN
+F 3 "~" H 8150 6000 50  0001 C CNN
+	1    8150 6000
+	-1   0    0    1   
+$EndComp
+Text GLabel 2850 6050 1    50   Input ~ 0
+KB_COL_EXT
+Text GLabel 10500 5450 0    50   Input ~ 0
+KB_ROW8
+Text GLabel 10500 5150 0    50   Input ~ 0
+KB_ROW7
+Text GLabel 10500 4850 0    50   Input ~ 0
+KB_ROW6
+Text GLabel 10500 4550 0    50   Input ~ 0
+KB_ROW5
+Text GLabel 10500 4250 0    50   Input ~ 0
+KB_ROW4
+Text GLabel 10500 3950 0    50   Input ~ 0
+KB_ROW3
+Text GLabel 10500 3650 0    50   Input ~ 0
+KB_ROW2
+Text GLabel 10500 3350 0    50   Input ~ 0
+KB_ROW1
+Text GLabel 1100 1500 0    50   Input ~ 0
+KB_ROW8
+Text GLabel 1100 1400 0    50   Input ~ 0
+KB_ROW7
+Text GLabel 1100 1200 0    50   Input ~ 0
+KB_ROW6
+Text GLabel 1100 1100 0    50   Input ~ 0
+KB_ROW5
+Text GLabel 1100 800  0    50   Input ~ 0
+KB_ROW4
+Text GLabel 1100 900  0    50   Input ~ 0
+KB_ROW3
+Text GLabel 1100 1000 0    50   Input ~ 0
+KB_ROW2
+Text GLabel 1100 1300 0    50   Input ~ 0
+KB_ROW1
+Text GLabel 2050 1900 2    50   Input ~ 0
+KB_COL_EXT
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D8
+U 1 1 5E606FB3
+P 2100 3400
+F 0 "D8" H 1950 3450 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 3478 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3600 20  0001 C CNN
+F 3 "" H 2100 3400 50  0001 C CNN
+F 4 "" V 2184 3478 60  0000 L CNN "Field4"
+	1    2100 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D7
+U 1 1 5E606ADA
+P 2100 3300
+F 0 "D7" H 1950 3350 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 3378 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3500 20  0001 C CNN
+F 3 "" H 2100 3300 50  0001 C CNN
+F 4 "" V 2184 3378 60  0000 L CNN "Field4"
+	1    2100 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D6
+U 1 1 5E606603
+P 2100 3200
+F 0 "D6" H 1950 3250 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 3278 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3400 20  0001 C CNN
+F 3 "" H 2100 3200 50  0001 C CNN
+F 4 "" V 2184 3278 60  0000 L CNN "Field4"
+	1    2100 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D5
+U 1 1 5E606140
+P 2100 3100
+F 0 "D5" H 1950 3150 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 3178 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3300 20  0001 C CNN
+F 3 "" H 2100 3100 50  0001 C CNN
+F 4 "" V 2184 3178 60  0000 L CNN "Field4"
+	1    2100 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D4
+U 1 1 5E605CC7
+P 2100 3000
+F 0 "D4" H 1950 3050 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 3078 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3200 20  0001 C CNN
+F 3 "" H 2100 3000 50  0001 C CNN
+F 4 "" V 2184 3078 60  0000 L CNN "Field4"
+	1    2100 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D3
+U 1 1 5E605814
+P 2100 2900
+F 0 "D3" H 1950 2950 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 2978 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3100 20  0001 C CNN
+F 3 "" H 2100 2900 50  0001 C CNN
+F 4 "" V 2184 2978 60  0000 L CNN "Field4"
+	1    2100 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D2
+U 1 1 5E60498E
+P 2100 2800
+F 0 "D2" H 1950 2850 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 2878 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 3000 20  0001 C CNN
+F 3 "" H 2100 2800 50  0001 C CNN
+F 4 "" V 2184 2878 60  0000 L CNN "Field4"
+	1    2100 2800
+	1    0    0    -1  
+$EndComp
+Text GLabel 2200 3400 2    50   Input ~ 0
+KB_ROW8
+Text GLabel 2200 3300 2    50   Input ~ 0
+KB_ROW7
+Text GLabel 2200 3200 2    50   Input ~ 0
+KB_ROW6
+Text GLabel 2200 3100 2    50   Input ~ 0
+KB_ROW5
+Text GLabel 2200 3000 2    50   Input ~ 0
+KB_ROW4
+Text GLabel 2200 2900 2    50   Input ~ 0
+KB_ROW3
+Text GLabel 2200 2800 2    50   Input ~ 0
+KB_ROW2
+Text GLabel 2200 2700 2    50   Input ~ 0
+KB_ROW1
+Wire Wire Line
+	10800 5550 10800 5450
+Connection ~ 10800 5450
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_ESC1
+U 1 1 5E5A9F48
+P 10650 5450
+F 0 "S_ESC1" H 10650 5591 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 5849 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 5850 20  0001 C CNN
+F 3 "" H 10650 5450 50  0001 C CNN
+F 4 "XXX-00000" H 10650 5754 60  0001 C CNN "Field4"
+	1    10650 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10800 5150 10800 5450
+Connection ~ 10800 5150
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_ENTER1
+U 1 1 5E5A8FC8
+P 10650 5150
+F 0 "S_ENTER1" H 10650 5291 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 5549 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 5550 20  0001 C CNN
+F 3 "" H 10650 5150 50  0001 C CNN
+F 4 "XXX-00000" H 10650 5454 60  0001 C CNN "Field4"
+	1    10650 5150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10800 4850 10800 5150
+Connection ~ 10800 4850
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_FIRE2
+U 1 1 5E5A218C
+P 10650 4850
+F 0 "S_FIRE2" H 10650 4991 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 5249 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 5250 20  0001 C CNN
+F 3 "" H 10650 4850 50  0001 C CNN
+F 4 "XXX-00000" H 10650 5154 60  0001 C CNN "Field4"
+	1    10650 4850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10800 4550 10800 4850
+Connection ~ 10800 4550
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_FIRE1
+U 1 1 5E5A1887
+P 10650 4550
+F 0 "S_FIRE1" H 10650 4691 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 4949 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4950 20  0001 C CNN
+F 3 "" H 10650 4550 50  0001 C CNN
+F 4 "XXX-00000" H 10650 4854 60  0001 C CNN "Field4"
+	1    10650 4550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10800 4250 10800 4550
+Connection ~ 10800 4250
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_DOWN1
+U 1 1 5E5A0EE8
+P 10650 4250
+F 0 "S_DOWN1" H 10650 4391 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 4649 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4650 20  0001 C CNN
+F 3 "" H 10650 4250 50  0001 C CNN
+F 4 "XXX-00000" H 10650 4554 60  0001 C CNN "Field4"
+	1    10650 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10800 3950 10800 4250
+Connection ~ 10800 3950
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_UP1
+U 1 1 5E5A06A1
+P 10650 3950
+F 0 "S_UP1" H 10650 4091 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 4349 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4350 20  0001 C CNN
+F 3 "" H 10650 3950 50  0001 C CNN
+F 4 "XXX-00000" H 10650 4254 60  0001 C CNN "Field4"
+	1    10650 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10800 3650 10800 3950
+Wire Wire Line
+	10800 3350 10800 3650
+Connection ~ 10800 3650
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_RIGHT1
+U 1 1 5E59DCBC
+P 10650 3650
+F 0 "S_RIGHT1" H 10650 3791 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD" H 10650 4049 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4050 20  0001 C CNN
+F 3 "" H 10650 3650 50  0001 C CNN
+F 4 "XXX-00000" H 10650 3954 60  0001 C CNN "Field4"
+	1    10650 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_LEFT1
+U 1 1 5E597102
+P 10650 3350
+F 0 "S_LEFT1" H 10650 3491 45  0000 C CNN
+F 1 "BUTTON-CONDUCTIVESMD_SMALL" H 10650 3749 45  0001 C CNN
+F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 3750 20  0001 C CNN
+F 3 "" H 10650 3350 50  0001 C CNN
+F 4 "XXX-00000" H 10650 3654 60  0001 C CNN "Field4"
+	1    10650 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4081 U3
+U 4 1 5E4CB526
+P 4950 6350
+F 0 "U3" V 4904 6538 50  0000 L CNN
+F 1 "4081" V 4995 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 4950 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 4950 6350 50  0001 C CNN
+	4    4950 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L 4xxx:4081 U3
+U 3 1 5E4D127A
+P 5500 6350
+F 0 "U3" V 5454 6538 50  0000 L CNN
+F 1 "4081" V 5545 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 5500 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 5500 6350 50  0001 C CNN
+	3    5500 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L 4xxx:4081 U3
+U 2 1 5E4D2E32
+P 6050 6350
+F 0 "U3" V 6004 6538 50  0000 L CNN
+F 1 "4081" V 6095 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 6050 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 6050 6350 50  0001 C CNN
+	2    6050 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L 4xxx:4081 U3
+U 1 1 5E4D3FFD
+P 6600 6350
+F 0 "U3" V 6554 6538 50  0000 L CNN
+F 1 "4081" V 6645 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 6600 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 6600 6350 50  0001 C CNN
+	1    6600 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D14
+U 1 1 5E4DFE04
+P 4950 6750
+F 0 "D14" V 4950 6828 45  0000 L CNN
+F 1 "DIODE-1N4148" V 4992 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 4950 6950 20  0001 C CNN
+F 3 "" H 4950 6750 50  0001 C CNN
+F 4 "" V 5034 6828 60  0000 L CNN "Field4"
+	1    4950 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D13
+U 1 1 5E4E11A7
+P 5500 6750
+F 0 "D13" V 5500 6828 45  0000 L CNN
+F 1 "DIODE-1N4148" V 5542 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 5500 6950 20  0001 C CNN
+F 3 "" H 5500 6750 50  0001 C CNN
+F 4 "" V 5584 6828 60  0000 L CNN "Field4"
+	1    5500 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D12
+U 1 1 5E4E1910
+P 6050 6750
+F 0 "D12" V 6050 6828 45  0000 L CNN
+F 1 "DIODE-1N4148" V 6092 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 6050 6950 20  0001 C CNN
+F 3 "" H 6050 6750 50  0001 C CNN
+F 4 "" V 6134 6828 60  0000 L CNN "Field4"
+	1    6050 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D11
+U 1 1 5E4E2081
+P 6600 6750
+F 0 "D11" V 6600 6828 45  0000 L CNN
+F 1 "DIODE-1N4148" V 6642 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 6600 6950 20  0001 C CNN
+F 3 "" H 6600 6750 50  0001 C CNN
+F 4 "" V 6684 6828 60  0000 L CNN "Field4"
+	1    6600 6750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4400 6950 4950 6950
+Connection ~ 4950 6950
+Wire Wire Line
+	4950 6850 4950 6950
+Wire Wire Line
+	6600 6950 6600 6850
+Connection ~ 6600 6950
+Wire Wire Line
+	6600 6950 6650 6950
+Wire Wire Line
+	6050 6850 6050 6950
+Wire Wire Line
+	6050 6950 6600 6950
+Connection ~ 6050 6950
+Wire Wire Line
+	4950 6950 5500 6950
+Wire Wire Line
+	5500 6950 6050 6950
+Connection ~ 5500 6950
+Wire Wire Line
+	5500 6850 5500 6950
+$Comp
+L Device:R R9
+U 1 1 5E4EB602
+P 6800 6950
+F 0 "R9" V 6900 6950 50  0000 C CNN
+F 1 "10K" V 6800 6950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 6730 6950 50  0001 C CNN
+F 3 "~" H 6800 6950 50  0001 C CNN
+	1    6800 6950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0107
+U 1 1 5E4F1D9F
+P 7050 6950
+F 0 "#PWR0107" H 7050 6700 50  0001 C CNN
+F 1 "GND" H 7150 6850 50  0000 C CNN
+F 2 "" H 7050 6950 50  0001 C CNN
+F 3 "" H 7050 6950 50  0001 C CNN
+	1    7050 6950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6950 6950 7050 6950
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D15
+U 1 1 5E51BBFF
+P 4400 6750
+F 0 "D15" V 4400 6672 45  0000 R CNN
+F 1 "DIODE-1N4148" V 4442 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 4400 6950 20  0001 C CNN
+F 3 "" H 4400 6750 50  0001 C CNN
+F 4 "" V 4484 6828 60  0000 L CNN "Field4"
+	1    4400 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:KARABAS_QU_KB_HEADER J3
+U 1 1 5E888E21
+P 1550 1350
+F 0 "J3" H 1575 2165 50  0000 C CNN
+F 1 "KARABAS_QU_KB_HEADER" H 1575 2074 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_2x12_Pitch2.54mm" H 1600 1950 50  0001 C CNN
+F 3 "" H 1600 1950 50  0001 C CNN
+	1    1550 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0116
+U 1 1 5E6D1F6B
+P 2650 4450
+F 0 "#PWR0116" H 2650 4200 50  0001 C CNN
+F 1 "GND" H 2550 4350 50  0000 C CNN
+F 2 "" H 2650 4450 50  0001 C CNN
+F 3 "" H 2650 4450 50  0001 C CNN
+	1    2650 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 3800 3750 3850
+Wire Wire Line
+	3750 4400 3750 3850
+Connection ~ 3750 3850
+Wire Wire Line
+	3750 3850 3700 3850
+Wire Wire Line
+	3700 4400 3750 4400
+Wire Wire Line
+	2650 4450 2650 4400
+Wire Wire Line
+	2650 3850 2650 4400
+Connection ~ 2650 4400
+Wire Wire Line
+	2650 4400 2700 4400
+Wire Wire Line
+	2700 3850 2650 3850
+$Comp
+L power:GND #PWR0110
+U 1 1 5E5C15A1
+P 8250 6300
+F 0 "#PWR0110" H 8250 6050 50  0001 C CNN
+F 1 "GND" H 8350 6200 50  0000 C CNN
+F 2 "" H 8250 6300 50  0001 C CNN
+F 3 "" H 8250 6300 50  0001 C CNN
+	1    8250 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 5E5BED94
+P 7950 6000
+F 0 "R3" V 8050 6000 50  0000 C CNN
+F 1 "10K" V 7950 6000 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7880 6000 50  0001 C CNN
+F 3 "~" H 7950 6000 50  0001 C CNN
+	1    7950 6000
+	-1   0    0    1   
+$EndComp
+$Comp
+L 4xxx:4081 U4
+U 5 1 5E502FE4
+P 3200 4400
+F 0 "U4" V 2950 4150 50  0000 C CNN
+F 1 "4081" V 2950 4600 50  0000 C CNN
+F 2 "SMD_Packages:SOIC-14_N" H 3200 4400 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 3200 4400 50  0001 C CNN
+	5    3200 4400
+	0    1    1    0   
+$EndComp
+$Comp
+L 4xxx:4081 U3
+U 5 1 5E4D76AC
+P 3200 3850
+F 0 "U3" V 2950 3600 50  0000 C CNN
+F 1 "4081" V 2950 4050 50  0000 C CNN
+F 2 "SMD_Packages:SOIC-14_N" H 3200 3850 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 3200 3850 50  0001 C CNN
+	5    3200 3850
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	950  5200 1000 5200
+$Comp
+L power:GND #PWR0106
+U 1 1 5E4B6635
+P 900 2800
+F 0 "#PWR0106" H 900 2550 50  0001 C CNN
+F 1 "GND" H 800 2700 50  0000 C CNN
+F 2 "" H 900 2800 50  0001 C CNN
+F 3 "" H 900 2800 50  0001 C CNN
+	1    900  2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 3800 2100 4300
+Wire Wire Line
+	1500 6300 1500 6350
+$Comp
+L power:GND #PWR0105
+U 1 1 5E4C55C5
+P 1500 6350
+F 0 "#PWR0105" H 1500 6100 50  0001 C CNN
+F 1 "GND" H 1400 6250 50  0000 C CNN
+F 2 "" H 1500 6350 50  0001 C CNN
+F 3 "" H 1500 6350 50  0001 C CNN
+	1    1500 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 4100 1500 4150
+$Comp
+L power:GND #PWR0104
+U 1 1 5E4C27A5
+P 1500 4150
+F 0 "#PWR0104" H 1500 3900 50  0001 C CNN
+F 1 "GND" H 1400 4050 50  0000 C CNN
+F 2 "" H 1500 4150 50  0001 C CNN
+F 3 "" H 1500 4150 50  0001 C CNN
+	1    1500 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	800  4300 800  4900
+Wire Wire Line
+	800  4300 2100 4300
+Wire Wire Line
+	1500 2350 1500 2400
+$Comp
+L power:+3.3V #PWR0103
+U 1 1 5E4BEA73
+P 1500 2350
+F 0 "#PWR0103" H 1500 2200 50  0001 C CNN
+F 1 "+3.3V" H 1515 2523 50  0000 C CNN
+F 2 "" H 1500 2350 50  0001 C CNN
+F 3 "" H 1500 2350 50  0001 C CNN
+	1    1500 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 4550 1500 4600
+$Comp
+L power:+3.3V #PWR0102
+U 1 1 5E4B9EC4
+P 1500 4550
+F 0 "#PWR0102" H 1500 4400 50  0001 C CNN
+F 1 "+3.3V" H 1515 4723 50  0000 C CNN
+F 2 "" H 1500 4550 50  0001 C CNN
+F 3 "" H 1500 4550 50  0001 C CNN
+	1    1500 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 5E4B4CBA
+P 850 5000
+F 0 "#PWR0101" H 850 4750 50  0001 C CNN
+F 1 "GND" H 750 4900 50  0000 C CNN
+F 2 "" H 850 5000 50  0001 C CNN
+F 3 "" H 850 5000 50  0001 C CNN
+	1    850  5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	900  2800 1000 2800
+Wire Wire Line
+	1000 5000 850  5000
+Wire Wire Line
+	1000 4900 800  4900
+Wire Wire Line
+	2000 3800 2100 3800
+Wire Wire Line
+	950  2700 1000 2700
+$Comp
+L 4xxx:4017 U1
+U 1 1 5E4AE403
+P 1500 3200
+F 0 "U1" H 1750 3850 50  0000 C CNN
+F 1 "4017" H 1300 3850 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1500 3200 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4017bms-22bms.pdf" H 1500 3200 50  0001 C CNN
+	1    1500 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	950  3000 1000 3000
+$Comp
+L 4xxx:4017 U2
+U 1 1 5E4AF91D
+P 1500 5400
+F 0 "U2" H 1750 6050 50  0000 C CNN
+F 1 "4017" H 1300 6050 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1500 5400 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4017bms-22bms.pdf" H 1500 5400 50  0001 C CNN
+	1    1500 5400
+	1    0    0    -1  
+$EndComp
+Text HLabel 2550 6950 0    50   Input ~ 0
+SPI_MISO
+Text HLabel 950  5200 0    50   Input ~ 0
+CS_KEYB
+Text HLabel 7650 2250 0    50   Input ~ 0
+KEYB_EXT
+Text HLabel 9600 2250 0    50   Input ~ 0
+KEYB_EXT
+Text HLabel 950  2700 0    50   Input ~ 0
+SPI_SCK
+Text HLabel 950  3000 0    50   Input ~ 0
+CS_KEYB
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D1
+U 1 1 5E5EA7F6
+P 2100 2700
+F 0 "D1" H 1950 2750 45  0000 L CNN
+F 1 "DIODE-1N4148" V 2142 2778 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2100 2900 20  0001 C CNN
+F 3 "" H 2100 2700 50  0001 C CNN
+F 4 "" V 2184 2778 60  0000 L CNN "Field4"
+	1    2100 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0115
+U 1 1 5E6CC93C
+P 3750 3800
+F 0 "#PWR0115" H 3750 3650 50  0001 C CNN
+F 1 "+3.3V" H 3765 3973 50  0000 C CNN
+F 2 "" H 3750 3800 50  0001 C CNN
+F 3 "" H 3750 3800 50  0001 C CNN
+	1    3750 3800
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

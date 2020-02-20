@@ -1,0 +1,596 @@
+EESchema Schematic File Version 4
+LIBS:esp8266-zxspectrum-cache
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 2
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L RF_Module:ESP-12E U0
+U 1 1 5E4ACF0D
+P 1900 1900
+F 0 "U0" H 2350 2650 50  0000 C CNN
+F 1 "ESP-12E" H 1550 2650 50  0000 C CNN
+F 2 "ESP8266:ESP-12E" H 1900 1900 50  0001 C CNN
+F 3 "http://wiki.ai-thinker.com/_media/esp8266/esp8266_series_modules_user_manual_v1.1.pdf" H 1550 2000 50  0001 C CNN
+	1    1900 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:ILI9341_TFT_MODULE U6
+U 1 1 5E554E99
+P 3550 4750
+F 0 "U6" H 4150 5300 50  0000 C CNN
+F 1 "ILI9341_MODULE" H 3150 5300 50  0000 C CNN
+F 2 "esp8266-zxspectrum:ILI9341_TFT" H 3550 4050 50  0001 C CNN
+F 3 "http://pan.baidu.com/s/11Y990" H 2900 5250 50  0001 C CNN
+	1    3550 4750
+	1    0    0    -1  
+$EndComp
+Text GLabel 2600 2300 2    50   Input ~ 0
+D0
+Wire Wire Line
+	2600 2300 2500 2300
+Text GLabel 2600 1800 2    50   Input ~ 0
+D1
+Text GLabel 2600 1700 2    50   Input ~ 0
+D2
+Text GLabel 2600 1300 2    50   Input ~ 0
+D3
+Text GLabel 2600 1500 2    50   Input ~ 0
+D4
+Text GLabel 2600 2100 2    50   Input ~ 0
+D5
+Text GLabel 2600 2000 2    50   Input ~ 0
+D7
+Text GLabel 2600 2200 2    50   Input ~ 0
+D8
+Wire Wire Line
+	2500 1300 2600 1300
+Wire Wire Line
+	2600 1500 2500 1500
+Wire Wire Line
+	2600 1700 2500 1700
+Wire Wire Line
+	2500 1800 2600 1800
+Wire Wire Line
+	2600 1900 2500 1900
+Wire Wire Line
+	2500 2000 2600 2000
+Wire Wire Line
+	2600 2100 2500 2100
+Wire Wire Line
+	2500 2200 2600 2200
+$Comp
+L power:+3.3V #PWR0108
+U 1 1 5E570E6F
+P 1900 1000
+F 0 "#PWR0108" H 1900 850 50  0001 C CNN
+F 1 "+3.3V" H 1915 1173 50  0000 C CNN
+F 2 "" H 1900 1000 50  0001 C CNN
+F 3 "" H 1900 1000 50  0001 C CNN
+	1    1900 1000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 1000 1900 1100
+$Comp
+L power:GND #PWR0109
+U 1 1 5E575FFF
+P 1900 2650
+F 0 "#PWR0109" H 1900 2400 50  0001 C CNN
+F 1 "GND" H 1800 2550 50  0000 C CNN
+F 2 "" H 1900 2650 50  0001 C CNN
+F 3 "" H 1900 2650 50  0001 C CNN
+	1    1900 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 2600 1900 2650
+Text GLabel 2600 1900 2    50   Input ~ 0
+D6
+Text GLabel 3450 1400 0    50   Input ~ 0
+D6
+Text GLabel 3550 1300 2    50   Input ~ 0
+SPI_SCK
+Text GLabel 3450 1300 0    50   Input ~ 0
+D5
+Wire Wire Line
+	3450 1300 3550 1300
+Text GLabel 3550 1400 2    50   Input ~ 0
+SPI_MISO
+Wire Wire Line
+	3450 1400 3550 1400
+Text GLabel 3450 1500 0    50   Input ~ 0
+D7
+Text GLabel 3550 1500 2    50   Input ~ 0
+SPI_MOSI
+Wire Wire Line
+	3450 1500 3550 1500
+Text GLabel 3550 1750 2    50   Input ~ 0
+CS_KEYB
+Text GLabel 3450 1750 0    50   Input ~ 0
+D3
+Wire Wire Line
+	3450 1750 3550 1750
+Text GLabel 3450 1650 0    50   Input ~ 0
+D2
+Text GLabel 3550 1650 2    50   Input ~ 0
+CS_SDCARD
+Wire Wire Line
+	3450 1650 3550 1650
+Text GLabel 3450 2100 0    50   Input ~ 0
+D0
+Text GLabel 3550 2100 2    50   Input ~ 0
+SPEAKER
+Wire Wire Line
+	3450 2100 3550 2100
+Text GLabel 3450 2250 0    50   Input ~ 0
+D1
+Text GLabel 3550 2250 2    50   Input ~ 0
+CS_DISPLAY
+Wire Wire Line
+	3450 2250 3550 2250
+Text GLabel 1200 2200 0    50   Input ~ 0
+SD3
+Wire Wire Line
+	1200 2200 1300 2200
+Text GLabel 3450 2350 0    50   Input ~ 0
+SD3
+Text GLabel 3550 2350 2    50   Input ~ 0
+RESET_DISPLAY
+Wire Wire Line
+	3450 2350 3550 2350
+Text GLabel 3450 2450 0    50   Input ~ 0
+D4
+Text GLabel 3550 2450 2    50   Input ~ 0
+DC_DISPLAY
+Wire Wire Line
+	3550 2450 3450 2450
+Text GLabel 2750 4100 0    50   Input ~ 0
+CS_SDCARD
+Wire Wire Line
+	2750 4350 2750 4100
+Wire Wire Line
+	2700 4550 2750 4550
+Wire Wire Line
+	2750 4650 2600 4650
+Wire Wire Line
+	2750 4450 2600 4450
+Wire Wire Line
+	2600 4350 2200 4350
+Wire Wire Line
+	2600 4350 2600 4450
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 3 1 5E5F7396
+P 1900 4350
+F 0 "U5" H 1950 4500 50  0000 C CNN
+F 1 "CD4503" H 1900 4124 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1900 4350 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 1900 4350 50  0001 C CNN
+	3    1900 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 2 1 5E5F2054
+P 2400 4550
+F 0 "U5" H 2500 4450 50  0000 C CNN
+F 1 "CD4503" H 2700 4850 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 2400 4550 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 2400 4550 50  0001 C CNN
+	2    2400 4550
+	-1   0    0    1   
+$EndComp
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 1 1 5E5F9AD0
+P 1900 4750
+F 0 "U5" H 1950 4900 50  0000 C CNN
+F 1 "CD4503" H 1550 3200 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1900 4750 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 1900 4750 50  0001 C CNN
+	1    1900 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0111
+U 1 1 5E622B11
+P 3550 4100
+F 0 "#PWR0111" H 3550 3950 50  0001 C CNN
+F 1 "+3.3V" H 3565 4273 50  0000 C CNN
+F 2 "" H 3550 4100 50  0001 C CNN
+F 3 "" H 3550 4100 50  0001 C CNN
+	1    3550 4100
+	1    0    0    -1  
+$EndComp
+Text GLabel 1500 4350 0    50   Input ~ 0
+SPI_MOSI
+Wire Wire Line
+	1500 4350 1600 4350
+Text GLabel 1500 4550 0    50   Input ~ 0
+SPI_MISO
+Wire Wire Line
+	1500 4550 2100 4550
+Text GLabel 1500 4750 0    50   Input ~ 0
+SPI_SCK
+Wire Wire Line
+	1500 4750 1600 4750
+Text GLabel 4450 4650 2    50   Input ~ 0
+SPI_MOSI
+Wire Wire Line
+	4350 4650 4450 4650
+Text GLabel 4450 4750 2    50   Input ~ 0
+SPI_MISO
+Wire Wire Line
+	4450 4750 4350 4750
+Text GLabel 4450 4850 2    50   Input ~ 0
+SPI_SCK
+Wire Wire Line
+	4450 4850 4350 4850
+Text GLabel 4450 4550 2    50   Input ~ 0
+CS_DISPLAY
+Wire Wire Line
+	4450 4550 4350 4550
+Text GLabel 4450 4450 2    50   Input ~ 0
+DC_DISPLAY
+Wire Wire Line
+	4450 4450 4350 4450
+$Comp
+L power:+3.3V #PWR0113
+U 1 1 5E682503
+P 5000 4950
+F 0 "#PWR0113" H 5000 4800 50  0001 C CNN
+F 1 "+3.3V" H 5015 5123 50  0000 C CNN
+F 2 "" H 5000 4950 50  0001 C CNN
+F 3 "" H 5000 4950 50  0001 C CNN
+	1    5000 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5000 4950 4350 4950
+Text GLabel 4450 5050 2    50   Input ~ 0
+RESET_DISPLAY
+Wire Wire Line
+	4450 5050 4350 5050
+Wire Wire Line
+	3550 4100 3550 4150
+$Comp
+L power:GND #PWR0114
+U 1 1 5E695B8B
+P 3550 5750
+F 0 "#PWR0114" H 3550 5500 50  0001 C CNN
+F 1 "GND" H 3450 5650 50  0000 C CNN
+F 2 "" H 3550 5750 50  0001 C CNN
+F 3 "" H 3550 5750 50  0001 C CNN
+	1    3550 5750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 4650 2600 4750
+Wire Wire Line
+	2200 4750 2600 4750
+Text GLabel 2600 1600 2    50   Input ~ 0
+GPIO3
+Wire Wire Line
+	2600 1600 2500 1600
+Text GLabel 2600 1400 2    50   Input ~ 0
+GPIO1
+Wire Wire Line
+	2600 1400 2500 1400
+Text GLabel 1200 1500 0    50   Input ~ 0
+ESP_CHIP_EN
+Wire Wire Line
+	1200 1500 1300 1500
+Text GLabel 1200 1300 0    50   Input ~ 0
+ESP_RST
+Wire Wire Line
+	1200 1300 1300 1300
+Wire Wire Line
+	7800 2900 7800 2950
+Wire Wire Line
+	8300 2900 7800 2900
+$Comp
+L power:GND #PWR0118
+U 1 1 5E77687D
+P 7800 2950
+F 0 "#PWR0118" H 7800 2700 50  0001 C CNN
+F 1 "GND" H 7700 2850 50  0000 C CNN
+F 2 "" H 7800 2950 50  0001 C CNN
+F 3 "" H 7800 2950 50  0001 C CNN
+	1    7800 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9450 3200 10100 3200
+Wire Wire Line
+	10100 3150 10100 3200
+$Comp
+L power:+3.3V #PWR0119
+U 1 1 5E7682E0
+P 10100 3150
+F 0 "#PWR0119" H 10100 3000 50  0001 C CNN
+F 1 "+3.3V" H 10115 3323 50  0000 C CNN
+F 2 "" H 10100 3150 50  0001 C CNN
+F 3 "" H 10100 3150 50  0001 C CNN
+	1    10100 3150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9000 3550 8900 3550
+Text GLabel 9000 3550 2    50   Input ~ 0
+D4
+Text GLabel 8900 3550 0    50   Input ~ 0
+GPIO2
+Wire Wire Line
+	8900 3450 9000 3450
+Text GLabel 9000 3450 2    50   Input ~ 0
+D3
+Text GLabel 8900 3450 0    50   Input ~ 0
+GPIO0
+Wire Wire Line
+	9500 2900 9450 2900
+Wire Wire Line
+	9450 3100 9500 3100
+Wire Wire Line
+	8300 3200 8200 3200
+Wire Wire Line
+	8200 3100 8300 3100
+Wire Wire Line
+	8300 3000 8200 3000
+Text GLabel 8200 3200 0    50   Input ~ 0
+GPIO3
+Text GLabel 8200 3100 0    50   Input ~ 0
+GPIO0
+Text GLabel 8200 3000 0    50   Input ~ 0
+GPIO2
+Text GLabel 9500 3100 2    50   Input ~ 0
+ESP_RST
+Text GLabel 9500 2900 2    50   Input ~ 0
+GPIO1
+Wire Wire Line
+	9500 3000 9450 3000
+Text GLabel 9500 3000 2    50   Input ~ 0
+ESP_CHIP_EN
+$Comp
+L esp8266-zxspectrum:ESP-01-SOCKET J2
+U 1 1 5E73372C
+P 8850 2900
+F 0 "J2" H 9200 2450 50  0000 C CNN
+F 1 "ESP-01-SOCKET" H 8875 3074 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x04_Pitch2.54mm" H 8850 3150 50  0001 C CNN
+F 3 "" H 8850 2900 50  0001 C CNN
+	1    8850 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Speaker LS1
+U 1 1 5E7B8F91
+P 3700 6450
+F 0 "LS1" H 3650 6250 50  0000 C CNN
+F 1 "Speaker" H 3700 6650 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 3700 6250 50  0001 C CNN
+F 3 "~" H 3690 6400 50  0001 C CNN
+	1    3700 6450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4250 6350 3900 6350
+$Comp
+L power:+3.3V #PWR0120
+U 1 1 5E7C0F12
+P 4250 6250
+F 0 "#PWR0120" H 4250 6100 50  0001 C CNN
+F 1 "+3.3V" H 4265 6423 50  0000 C CNN
+F 2 "" H 4250 6250 50  0001 C CNN
+F 3 "" H 4250 6250 50  0001 C CNN
+	1    4250 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4250 6250 4250 6350
+$Comp
+L Device:Q_NPN_BCE Q1
+U 1 1 5E7C63DE
+P 4000 6800
+F 0 "Q1" H 4191 6800 50  0000 L CNN
+F 1 "Q_NPN_BCE" H 4191 6755 50  0001 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-23" H 4200 6900 50  0001 C CNN
+F 3 "~" H 4000 6800 50  0001 C CNN
+	1    4000 6800
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 6450 3900 6600
+$Comp
+L power:GND #PWR0121
+U 1 1 5E7CC6D9
+P 3900 7050
+F 0 "#PWR0121" H 3900 6800 50  0001 C CNN
+F 1 "GND" H 3800 6950 50  0000 C CNN
+F 2 "" H 3900 7050 50  0001 C CNN
+F 3 "" H 3900 7050 50  0001 C CNN
+	1    3900 7050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 7000 3900 7050
+$Comp
+L Device:R R10
+U 1 1 5E7D60A9
+P 4450 6800
+F 0 "R10" V 4550 6800 50  0000 C CNN
+F 1 "10K" V 4450 6800 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4380 6800 50  0001 C CNN
+F 3 "~" H 4450 6800 50  0001 C CNN
+	1    4450 6800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4200 6800 4300 6800
+Text GLabel 4700 6800 2    50   Input ~ 0
+SPEAKER
+Wire Wire Line
+	4700 6800 4600 6800
+Text GLabel 1200 2100 0    50   Input ~ 0
+SD2
+Wire Wire Line
+	1200 2100 1300 2100
+Text GLabel 3450 1850 0    50   Input ~ 0
+SD2
+Text GLabel 3550 1950 2    50   Input ~ 0
+KEYB_EXT
+Wire Wire Line
+	3450 1850 3550 1850
+$Sheet
+S 1700 3100 1000 500 
+U 5EEFB675
+F0 "Keyboard" 50
+F1 "Keyboard.sch" 50
+F2 "SPI_MISO" I R 2700 3200 50 
+F3 "CS_KEYB" I L 1700 3400 50 
+F4 "KEYB_EXT" I L 1700 3500 50 
+F5 "SPI_SCK" I L 1700 3200 50 
+$EndSheet
+Text GLabel 1600 3400 0    50   Input ~ 0
+CS_KEYB
+Text GLabel 1600 3500 0    50   Input ~ 0
+KEYB_EXT
+Wire Wire Line
+	1700 3500 1600 3500
+Wire Wire Line
+	1600 3400 1700 3400
+Text GLabel 1550 3200 0    50   Input ~ 0
+SPI_SCK
+Wire Wire Line
+	1550 3200 1700 3200
+Text GLabel 2800 3200 2    50   Input ~ 0
+SPI_MISO
+Wire Wire Line
+	2800 3200 2700 3200
+Wire Wire Line
+	3550 5650 3550 5750
+Text GLabel 3550 1850 2    50   Input ~ 0
+CS_TOUCH_SCR
+Text GLabel 2750 5150 0    50   Input ~ 0
+CS_TOUCH_SCR
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 4 1 5E59B0E9
+P 1550 5100
+F 0 "U5" H 1550 5250 50  0000 C CNN
+F 1 "CD4503" H 1550 4874 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1550 5100 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 1550 5100 50  0001 C CNN
+	4    1550 5100
+	1    0    0    -1  
+$EndComp
+Text GLabel 1250 5100 0    50   Input ~ 0
+SPI_SCK
+Wire Wire Line
+	1850 5100 2000 5100
+Wire Wire Line
+	2000 5100 2000 5050
+Wire Wire Line
+	2000 5050 2750 5050
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 5 1 5E5A8D28
+P 1900 5300
+F 0 "U5" H 1900 5450 50  0000 C CNN
+F 1 "CD4503" H 1900 5074 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1900 5300 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 1900 5300 50  0001 C CNN
+	5    1900 5300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 5300 2400 5300
+Wire Wire Line
+	2400 5300 2400 5250
+Wire Wire Line
+	2400 5250 2750 5250
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 6 1 5E5AC81E
+P 2200 5500
+F 0 "U5" H 2250 5400 50  0000 C CNN
+F 1 "CD4503" H 2200 5274 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 2200 5500 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 2200 5500 50  0001 C CNN
+	6    2200 5500
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2500 5500 2500 5350
+Wire Wire Line
+	2500 5350 2750 5350
+Text GLabel 1250 5300 0    50   Input ~ 0
+SPI_MOSI
+Text GLabel 1250 5500 0    50   Input ~ 0
+SPI_MISO
+Wire Wire Line
+	1250 5500 1900 5500
+Wire Wire Line
+	1600 5300 1250 5300
+Text GLabel 3450 1950 0    50   Input ~ 0
+GPIO3
+Wire Wire Line
+	3450 1950 3550 1950
+Text GLabel 2200 6700 2    50   Input ~ 0
+CS_TOUCH_SCR
+Wire Wire Line
+	2250 6350 2250 6400
+$Comp
+L power:+3.3V #PWR0117
+U 1 1 5E71F52F
+P 2250 6350
+F 0 "#PWR0117" H 2250 6200 50  0001 C CNN
+F 1 "+3.3V" H 2265 6523 50  0000 C CNN
+F 2 "" H 2250 6350 50  0001 C CNN
+F 3 "" H 2250 6350 50  0001 C CNN
+	1    2250 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1200 6700 1200 6750
+$Comp
+L power:GND #PWR0112
+U 1 1 5E62C90C
+P 1200 6750
+F 0 "#PWR0112" H 1200 6500 50  0001 C CNN
+F 1 "GND" H 1100 6650 50  0000 C CNN
+F 2 "" H 1200 6750 50  0001 C CNN
+F 3 "" H 1200 6750 50  0001 C CNN
+	1    1200 6750
+	1    0    0    -1  
+$EndComp
+Text GLabel 1200 6400 0    50   Input ~ 0
+CS_SDCARD
+Wire Wire Line
+	2250 6400 2200 6400
+Connection ~ 2250 6400
+Wire Wire Line
+	2300 6400 2250 6400
+$Comp
+L esp8266-zxspectrum:CD4503 U5
+U 7 1 5E61FA74
+P 1700 6550
+F 0 "U5" V 1450 6750 50  0000 C CNN
+F 1 "CD4503" H 1650 6300 50  0001 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 1700 6550 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS04" H 1700 6550 50  0001 C CNN
+	7    1700 6550
+	0    1    1    0   
+$EndComp
+$EndSCHEMATC
