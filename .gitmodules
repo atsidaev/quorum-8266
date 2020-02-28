@@ -1,0 +1,6 @@
+[submodule "firmware/lib/SdFat"]
+	path = firmware/lib/SdFat
+	url = https://github.com/greiman/SdFat
+[submodule "firmware/lib/TFT_eSPI"]
+	path = firmware/lib/TFT_eSPI
+	url = https://github.com/Bodmer/TFT_eSPI
