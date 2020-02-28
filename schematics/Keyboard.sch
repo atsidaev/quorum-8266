@@ -22,40 +22,8 @@ Text GLabel 2050 1600 2    50   Input ~ 0
 KB_ROW2
 Text GLabel 1100 1600 0    50   Input ~ 0
 KB_ROW1
-Wire Wire Line
-	2750 6950 2550 6950
-Connection ~ 2750 6950
-Wire Wire Line
-	2750 6850 2750 6950
-$Comp
-L esp8266-zxspectrum:DIODE-1N4148 D18
-U 1 1 5EC75DB3
-P 2750 6750
-F 0 "D18" V 2750 6672 45  0000 R CNN
-F 1 "DIODE-1N4148" V 2792 6828 45  0001 L CNN
-F 2 "Digikey:SOD-80" H 2750 6950 20  0001 C CNN
-F 3 "" H 2750 6750 50  0001 C CNN
-F 4 "" V 2834 6828 60  0000 L CNN "Field4"
-	1    2750 6750
-	0    1    1    0   
-$EndComp
 Text GLabel 3950 6050 1    50   Input ~ 0
 KB_COL6
-Wire Wire Line
-	2650 5600 2000 5600
-Wire Wire Line
-	2650 6050 2650 5600
-$Comp
-L 4xxx:4081 U4
-U 4 1 5EC4A4BC
-P 2750 6350
-F 0 "U4" V 2704 6538 50  0000 L CNN
-F 1 "4081" V 2795 6538 50  0000 L CNN
-F 2 "SMD_Packages:SOIC-14_N" H 2750 6350 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 2750 6350 50  0001 C CNN
-	4    2750 6350
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	3200 5500 3200 6050
 Wire Wire Line
@@ -114,136 +82,104 @@ Text GLabel 6700 6050 1    50   Input ~ 0
 KB_COL1
 Text GLabel 3400 6050 1    50   Input ~ 0
 KB_COL_JOY
-Text GLabel 10600 1350 2    50   Input ~ 0
+Text GLabel 7200 1300 2    50   Input ~ 0
 KB_COL6
-Text GLabel 10600 1050 2    50   Input ~ 0
+Text GLabel 7200 1000 2    50   Input ~ 0
 KB_COL5
-Text GLabel 8650 1950 2    50   Input ~ 0
+Text GLabel 5250 1900 2    50   Input ~ 0
 KB_COL4
-Text GLabel 8650 1650 2    50   Input ~ 0
+Text GLabel 5250 1600 2    50   Input ~ 0
 KB_COL3
-Text GLabel 8650 1350 2    50   Input ~ 0
+Text GLabel 5250 1300 2    50   Input ~ 0
 KB_COL2
-Text GLabel 8650 1050 2    50   Input ~ 0
+Text GLabel 5250 1000 2    50   Input ~ 0
 KB_COL1
-Wire Wire Line
-	9150 2050 9150 2650
-Connection ~ 9150 2650
-Wire Wire Line
-	9600 2050 9150 2050
-Connection ~ 9150 2050
-Wire Wire Line
-	9150 1950 9150 2050
-Wire Wire Line
-	9600 1950 9150 1950
-Connection ~ 9150 1950
-Wire Wire Line
-	9150 1750 9150 1950
-Wire Wire Line
-	9600 1750 9150 1750
-Connection ~ 9150 1750
-Wire Wire Line
-	9150 1650 9150 1750
-Wire Wire Line
-	9600 1650 9150 1650
-Connection ~ 9150 1650
-Wire Wire Line
-	9150 1350 9150 1650
-Wire Wire Line
-	9600 1350 9150 1350
-Text GLabel 9600 1450 0    50   Input ~ 0
+Text GLabel 6200 1400 0    50   Input ~ 0
 KB_D5*
-Text GLabel 9600 1150 0    50   Input ~ 0
+Text GLabel 6200 1100 0    50   Input ~ 0
 KB_D4*
-Text GLabel 9600 1050 0    50   Input ~ 0
+Text GLabel 6200 1000 0    50   Input ~ 0
 KB_D4
-Text GLabel 7650 1650 0    50   Input ~ 0
+Text GLabel 4250 1600 0    50   Input ~ 0
 KB_D2
-Text GLabel 7650 1950 0    50   Input ~ 0
+Text GLabel 4250 1900 0    50   Input ~ 0
 KB_D3
-Text GLabel 7650 2050 0    50   Input ~ 0
+Text GLabel 4250 2000 0    50   Input ~ 0
 KB_D3*
-Text GLabel 7650 1750 0    50   Input ~ 0
+Text GLabel 4250 1700 0    50   Input ~ 0
 KB_D2*
-Text GLabel 7650 1450 0    50   Input ~ 0
+Text GLabel 4250 1400 0    50   Input ~ 0
 KB_D1*
-Text GLabel 7650 1350 0    50   Input ~ 0
+Text GLabel 4250 1300 0    50   Input ~ 0
 KB_D1
-Text GLabel 7650 1150 0    50   Input ~ 0
+Text GLabel 4250 1100 0    50   Input ~ 0
 KB_D0*
-Text GLabel 7650 1050 0    50   Input ~ 0
+Text GLabel 4250 1000 0    50   Input ~ 0
 KB_D0
 $Comp
 L power:+3.3V #PWR0122
 U 1 1 5EA7FF89
-P 7600 750
-F 0 "#PWR0122" H 7600 600 50  0001 C CNN
-F 1 "+3.3V" H 7615 923 50  0000 C CNN
-F 2 "" H 7600 750 50  0001 C CNN
-F 3 "" H 7600 750 50  0001 C CNN
-	1    7600 750 
+P 4200 700
+F 0 "#PWR0122" H 4200 550 50  0001 C CNN
+F 1 "+3.3V" H 4215 873 50  0000 C CNN
+F 2 "" H 4200 700 50  0001 C CNN
+F 3 "" H 4200 700 50  0001 C CNN
+	1    4200 700 
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	9150 2650 9550 2650
+	6700 2600 6150 2600
+Connection ~ 6150 2600
 Wire Wire Line
-	10100 2650 9550 2650
-Connection ~ 9550 2650
+	6150 2300 6150 2600
 Wire Wire Line
-	9550 2350 9550 2650
+	4200 2300 4200 2600
 Wire Wire Line
-	7600 2350 7600 2650
+	6150 2300 6200 2300
 Wire Wire Line
-	9550 2350 9600 2350
-Wire Wire Line
-	7650 2350 7600 2350
-Connection ~ 7600 2650
+	4250 2300 4200 2300
+Connection ~ 4200 2600
 $Comp
 L power:GND #PWR0123
 U 1 1 5EA513F0
-P 7600 2650
-F 0 "#PWR0123" H 7600 2400 50  0001 C CNN
-F 1 "GND" H 7500 2550 50  0000 C CNN
-F 2 "" H 7600 2650 50  0001 C CNN
-F 3 "" H 7600 2650 50  0001 C CNN
-	1    7600 2650
+P 4200 2600
+F 0 "#PWR0123" H 4200 2350 50  0001 C CNN
+F 1 "GND" H 4100 2500 50  0000 C CNN
+F 2 "" H 4200 2600 50  0001 C CNN
+F 3 "" H 4200 2600 50  0001 C CNN
+	1    4200 2600
 	1    0    0    -1  
 $EndComp
 $Comp
 L 74xx:74LS157 U8
 U 1 1 5EA2CF88
-P 10100 1650
-F 0 "U8" H 10100 2731 50  0000 C CNN
-F 1 "74HC157" H 10100 2640 50  0000 C CNN
-F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 10100 1650 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74LS157" H 10100 1650 50  0001 C CNN
-	1    10100 1650
+P 6700 1600
+F 0 "U8" H 6700 2681 50  0000 C CNN
+F 1 "74HC157" H 6700 2590 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 6700 1600 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS157" H 6700 1600 50  0001 C CNN
+	1    6700 1600
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	8150 2650 9150 2650
+	4750 2600 4200 2600
+Connection ~ 4750 2600
 Wire Wire Line
-	8150 2650 7600 2650
-Connection ~ 8150 2650
+	4200 700  4750 700 
 Wire Wire Line
-	7600 750  8150 750 
-Wire Wire Line
-	8150 750  10100 750 
-Connection ~ 8150 750 
+	4750 700  6700 700 
+Connection ~ 4750 700 
 $Comp
 L 74xx:74LS157 U7
 U 1 1 5EA266FD
-P 8150 1650
-F 0 "U7" H 8150 2731 50  0000 C CNN
-F 1 "74HC157" H 8150 2640 50  0000 C CNN
-F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 8150 1650 50  0001 C CNN
-F 3 "http://www.ti.com/lit/gpn/sn74LS157" H 8150 1650 50  0001 C CNN
-	1    8150 1650
+P 4750 1600
+F 0 "U7" H 4750 2681 50  0000 C CNN
+F 1 "74HC157" H 4750 2590 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-16_3.9x9.9mm_Pitch1.27mm" H 4750 1600 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS157" H 4750 1600 50  0001 C CNN
+	1    4750 1600
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	2750 6950 3300 6950
-Connection ~ 3300 6950
 Wire Wire Line
 	3300 6850 3300 6950
 Connection ~ 4400 6950
@@ -345,11 +281,9 @@ Text GLabel 7750 5850 1    50   Input ~ 0
 KB_COL2
 Text GLabel 7550 5850 1    50   Input ~ 0
 KB_COL1
-Text GLabel 8950 5850 1    50   Input ~ 0
-KB_COL_JOY
-Text GLabel 10800 5550 3    50   Input ~ 0
-KB_COL_JOY
 Text GLabel 8750 5850 1    50   Input ~ 0
+KB_COL_JOY
+Text GLabel 8950 5850 1    50   Input ~ 0
 KB_COL_EXT
 Wire Wire Line
 	7750 6150 7750 6250
@@ -369,10 +303,7 @@ Connection ~ 8550 6250
 Wire Wire Line
 	8550 6150 8550 6250
 Wire Wire Line
-	8950 6250 8750 6250
-Wire Wire Line
 	8550 6250 8750 6250
-Connection ~ 8750 6250
 Wire Wire Line
 	8750 6250 8750 6150
 Wire Wire Line
@@ -453,23 +384,9 @@ F 3 "~" H 8150 6000 50  0001 C CNN
 	1    8150 6000
 	-1   0    0    1   
 $EndComp
-Text GLabel 2850 6050 1    50   Input ~ 0
-KB_COL_EXT
-Text GLabel 10500 5450 0    50   Input ~ 0
-KB_ROW8
-Text GLabel 10500 5150 0    50   Input ~ 0
-KB_ROW7
-Text GLabel 10500 4850 0    50   Input ~ 0
-KB_ROW6
-Text GLabel 10500 4550 0    50   Input ~ 0
-KB_ROW5
-Text GLabel 10500 4250 0    50   Input ~ 0
-KB_ROW4
-Text GLabel 10500 3950 0    50   Input ~ 0
-KB_ROW3
-Text GLabel 10500 3650 0    50   Input ~ 0
+Text GLabel 6650 3400 0    50   Input ~ 0
 KB_ROW2
-Text GLabel 10500 3350 0    50   Input ~ 0
+Text GLabel 6650 3500 0    50   Input ~ 0
 KB_ROW1
 Text GLabel 1100 1500 0    50   Input ~ 0
 KB_ROW8
@@ -573,141 +490,18 @@ F 4 "" V 2184 2878 60  0000 L CNN "Field4"
 	1    2100 2800
 	1    0    0    -1  
 $EndComp
-Text GLabel 2200 3400 2    50   Input ~ 0
-KB_ROW8
-Text GLabel 2200 3300 2    50   Input ~ 0
-KB_ROW7
 Text GLabel 2200 3200 2    50   Input ~ 0
-KB_ROW6
-Text GLabel 2200 3100 2    50   Input ~ 0
-KB_ROW5
-Text GLabel 2200 3000 2    50   Input ~ 0
-KB_ROW4
+KB_ROW8
 Text GLabel 2200 2900 2    50   Input ~ 0
+KB_ROW6
+Text GLabel 2200 3300 2    50   Input ~ 0
+KB_ROW5
+Text GLabel 2200 3100 2    50   Input ~ 0
+KB_ROW4
+Text GLabel 2200 3000 2    50   Input ~ 0
 KB_ROW3
-Text GLabel 2200 2800 2    50   Input ~ 0
+Text GLabel 2200 3400 2    50   Input ~ 0
 KB_ROW2
-Text GLabel 2200 2700 2    50   Input ~ 0
-KB_ROW1
-Wire Wire Line
-	10800 5550 10800 5450
-Connection ~ 10800 5450
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_ESC1
-U 1 1 5E5A9F48
-P 10650 5450
-F 0 "S_ESC1" H 10650 5591 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 5849 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 5850 20  0001 C CNN
-F 3 "" H 10650 5450 50  0001 C CNN
-F 4 "XXX-00000" H 10650 5754 60  0001 C CNN "Field4"
-	1    10650 5450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10800 5150 10800 5450
-Connection ~ 10800 5150
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_ENTER1
-U 1 1 5E5A8FC8
-P 10650 5150
-F 0 "S_ENTER1" H 10650 5291 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 5549 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 5550 20  0001 C CNN
-F 3 "" H 10650 5150 50  0001 C CNN
-F 4 "XXX-00000" H 10650 5454 60  0001 C CNN "Field4"
-	1    10650 5150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10800 4850 10800 5150
-Connection ~ 10800 4850
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_FIRE2
-U 1 1 5E5A218C
-P 10650 4850
-F 0 "S_FIRE2" H 10650 4991 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 5249 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 5250 20  0001 C CNN
-F 3 "" H 10650 4850 50  0001 C CNN
-F 4 "XXX-00000" H 10650 5154 60  0001 C CNN "Field4"
-	1    10650 4850
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10800 4550 10800 4850
-Connection ~ 10800 4550
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_FIRE1
-U 1 1 5E5A1887
-P 10650 4550
-F 0 "S_FIRE1" H 10650 4691 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 4949 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4950 20  0001 C CNN
-F 3 "" H 10650 4550 50  0001 C CNN
-F 4 "XXX-00000" H 10650 4854 60  0001 C CNN "Field4"
-	1    10650 4550
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10800 4250 10800 4550
-Connection ~ 10800 4250
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_DOWN1
-U 1 1 5E5A0EE8
-P 10650 4250
-F 0 "S_DOWN1" H 10650 4391 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 4649 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4650 20  0001 C CNN
-F 3 "" H 10650 4250 50  0001 C CNN
-F 4 "XXX-00000" H 10650 4554 60  0001 C CNN "Field4"
-	1    10650 4250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10800 3950 10800 4250
-Connection ~ 10800 3950
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_UP1
-U 1 1 5E5A06A1
-P 10650 3950
-F 0 "S_UP1" H 10650 4091 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 4349 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4350 20  0001 C CNN
-F 3 "" H 10650 3950 50  0001 C CNN
-F 4 "XXX-00000" H 10650 4254 60  0001 C CNN "Field4"
-	1    10650 3950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	10800 3650 10800 3950
-Wire Wire Line
-	10800 3350 10800 3650
-Connection ~ 10800 3650
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_RIGHT1
-U 1 1 5E59DCBC
-P 10650 3650
-F 0 "S_RIGHT1" H 10650 3791 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD" H 10650 4049 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 4050 20  0001 C CNN
-F 3 "" H 10650 3650 50  0001 C CNN
-F 4 "XXX-00000" H 10650 3954 60  0001 C CNN "Field4"
-	1    10650 3650
-	1    0    0    -1  
-$EndComp
-$Comp
-L esp8266-zxspectrum:BUTTON-CONDUCTIVESMD_SMALL S_LEFT1
-U 1 1 5E597102
-P 10650 3350
-F 0 "S_LEFT1" H 10650 3491 45  0000 C CNN
-F 1 "BUTTON-CONDUCTIVESMD_SMALL" H 10650 3749 45  0001 C CNN
-F 2 "SparkFun-Switches:BUTTON-CONDUCTIVE" H 10650 3750 20  0001 C CNN
-F 3 "" H 10650 3350 50  0001 C CNN
-F 4 "XXX-00000" H 10650 3654 60  0001 C CNN "Field4"
-	1    10650 3350
-	1    0    0    -1  
-$EndComp
 $Comp
 L 4xxx:4081 U3
 U 4 1 5E4CB526
@@ -1058,13 +852,13 @@ F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4017bms-22bms
 	1    1500 5400
 	1    0    0    -1  
 $EndComp
-Text HLabel 2550 6950 0    50   Input ~ 0
+Text HLabel 2500 6950 0    50   Input ~ 0
 SPI_MISO
 Text HLabel 950  5200 0    50   Input ~ 0
 CS_KEYB
-Text HLabel 7650 2250 0    50   Input ~ 0
+Text HLabel 4250 2200 0    50   Input ~ 0
 KEYB_EXT
-Text HLabel 9600 2250 0    50   Input ~ 0
+Text HLabel 6200 2200 0    50   Input ~ 0
 KEYB_EXT
 Text HLabel 950  2700 0    50   Input ~ 0
 SPI_SCK
@@ -1093,4 +887,88 @@ F 3 "" H 3750 3800 50  0001 C CNN
 	1    3750 3800
 	1    0    0    -1  
 $EndComp
+Text GLabel 6650 3300 0    50   Input ~ 0
+KB_ROW3
+Text GLabel 6650 3200 0    50   Input ~ 0
+KB_ROW4
+Text GLabel 6650 4400 0    50   Input ~ 0
+KB_ROW5
+Text GLabel 6650 4300 0    50   Input ~ 0
+KB_ROW6
+Text GLabel 6650 4200 0    50   Input ~ 0
+KB_ROW7
+Text GLabel 6650 4100 0    50   Input ~ 0
+KB_ROW8
+Text GLabel 6650 3100 0    50   Input ~ 0
+KB_COL_JOY
+Wire Wire Line
+	2500 6950 2750 6950
+Connection ~ 3300 6950
+Text GLabel 6650 4000 0    50   Input ~ 0
+KB_COL_JOY
+$Comp
+L Connector:Conn_01x05_Male J4
+U 1 1 5E555826
+P 6850 3300
+F 0 "J4" H 7150 3000 50  0000 R CNN
+F 1 "Joy_Conn_Directions" H 7550 3600 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 6850 3300 50  0001 C CNN
+F 3 "~" H 6850 3300 50  0001 C CNN
+	1    6850 3300
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Conn_01x05_Male J5
+U 1 1 5E58D57D
+P 6850 4200
+F 0 "J5" H 7150 3900 50  0000 R CNN
+F 1 "Joy_Conn_Buttons" H 7550 4500 50  0000 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x05_Pitch2.54mm" H 6850 4200 50  0001 C CNN
+F 3 "~" H 6850 4200 50  0001 C CNN
+	1    6850 4200
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8950 6250 8750 6250
+Connection ~ 8750 6250
+$Comp
+L 4xxx:4081 U4
+U 4 1 5E5691AA
+P 2750 6350
+F 0 "U4" V 2704 6538 50  0000 L CNN
+F 1 "4081" V 2795 6538 50  0000 L CNN
+F 2 "SMD_Packages:SOIC-14_N" H 2750 6350 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/Intersil/documents/cd40/cd4073bms-81bms-82bms.pdf" H 2750 6350 50  0001 C CNN
+	4    2750 6350
+	0    1    1    0   
+$EndComp
+$Comp
+L esp8266-zxspectrum:DIODE-1N4148 D18
+U 1 1 5E56B76B
+P 2750 6750
+F 0 "D18" V 2750 6672 45  0000 R CNN
+F 1 "DIODE-1N4148" V 2792 6828 45  0001 L CNN
+F 2 "Digikey:SOD-80" H 2750 6950 20  0001 C CNN
+F 3 "" H 2750 6750 50  0001 C CNN
+F 4 "" V 2834 6828 60  0000 L CNN "Field4"
+	1    2750 6750
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2750 6850 2750 6950
+Connection ~ 2750 6950
+Wire Wire Line
+	2750 6950 3300 6950
+Wire Wire Line
+	2650 6050 2650 5600
+Wire Wire Line
+	2650 5600 2000 5600
+Text GLabel 2850 6050 1    50   Input ~ 0
+KB_COL_EXT
+Text GLabel 2200 2700 2    50   Input ~ 0
+KB_ROW1
+Text GLabel 2200 2800 2    50   Input ~ 0
+KB_ROW7
+Wire Wire Line
+	4750 2600 6150 2600
 $EndSCHEMATC
