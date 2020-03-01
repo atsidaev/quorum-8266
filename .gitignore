@@ -1,2 +1,5 @@
 /firmware/.arduino.tmp
 /firmware/*.o
+/firmware/Zxrom.h
+/firmware/quorum8266.bin
+/firmware/quorum8266.elf
