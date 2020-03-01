@@ -28,7 +28,7 @@ INCLUDES += -I.
 DEFINES = -U__STRICT_ANSI__ -D__ets__ -DICACHE_FLASH -DF_CPU=80000000L -DLWIP_OPEN_SRC -DARDUINO=10809 -DARDUINO_ESP8266_NODEMCU -DARDUINO_ARCH_ESP8266 -DARDUINO_BOARD=\"ESP8266_NODEMCU\" -DESP8266 -DESP8266_NOWIFI
 OPTIONS = -w  -O2 -g -mtext-section-literals -mlongcalls -falign-functions=4 -ffunction-sections -fdata-sections
 
-#TFT_eSPI configuration
+#TFT_eSPI configuration (one can change SPI frequency too with -DSPI_FREQUENCY=80000000)
 DEFINES += -DUSER_SETUP_LOADED -DILI9341_DRIVER -DTFT_CS=PIN_D1 -DTFT_DC=PIN_D4 -DTFT_RST=-1
 
 CFLAGS += -std=gnu99 -fno-inline-functions -Wpointer-arith
@@ -43,8 +43,6 @@ CXXFLAGS += -Wno-delete-non-virtual-dtor-mlongcalls  -fno-exceptions -fno-rtti -
 
 LDFLAGS = -nostdlib --no-check-sections -u call_user_start -u _printf_float -u _scanf_float -static --gc-sections -wrap system_restart_local -wrap spi_flash_read
 LDFLAGS += ${LIBRARY_PATH} --start-group -T eagle.app.v6.ld ${ARDUINO_TMP}/arduino.ar -lstdc++ -lm -lc -lmgcc -lloader -lsys
-
-ROMS := ROM/ROM_ZX48.h
 
 # Project sources
 CXX_SRC := ${ARDUINO_TMP}/firmware.cpp SdNavigation.cpp SpiSwitch.cpp Zxdisplay.cpp Zxsound.cpp ShowKeyboard.cpp Z80filedecoder.cpp Zxkeyboard.cpp
@@ -68,7 +66,9 @@ ARDUINO_SRC_TMP := $(addprefix ${ARDUINO_TMP}/, ${ARDUINO_SRC})
 ARDUINO_INTERNAL_LIBS_TMP := $(addprefix ${ARDUINO_TMP}/, ${ARDUINO_INTERNAL_LIBS})
 
 all: quorum8266.bin
-#${ROMS}
+
+Zxrom.h: roms/ZX48.ROM
+	xxd -i $< | tail -n +2 | head -n -2 > $@
 
 # To simplify things we do Arduino way and copy required source files to temporary directory
 
@@ -82,7 +82,7 @@ ${ARDUINO_TMP}/%.c: ${ESP_SDK}/cores/esp8266/%.c
 	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
 	cp $< $@
 
-${ARDUINO_TMP}/firmware.cpp: firmware.ino
+${ARDUINO_TMP}/firmware.cpp: firmware.ino Zxrom.h
 	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
 	cp $< $@
 
@@ -110,9 +110,9 @@ ${ARDUINO_TMP}/arduino.ar: ${ARDUINO_SRC_TMP:=.o}
 	${AR} cru $@ $^
 
 clean:
-	rm quorum8266.hex ${ROMS} || true
-	find -name '*.o' -delete
+	rm quorum8266.hex Zxrom.h ${ROMS} || true
 	rm -rf ${ARDUINO_TMP}
+	find -name '*.o' -delete
 
 quorum8266.elf: ${CXX_SRC:=.o} ${C_SRC:=.o} ${ARDUINO_TMP}/arduino.ar ${ARDUINO_INTERNAL_LIBS_TMP:=.o}
 	${LD} -o $@ $^ ${LDFLAGS}
