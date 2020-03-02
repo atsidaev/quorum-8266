@@ -21,11 +21,11 @@
 #include "Zxkeyboard.h"
 #include "GlobalDef.h"
 #include "ShowKeyboard.h"
-#include "z80.h"
+#include "lib/Z80/Z80.h"
+#include "z80_operations.h"
+#include "Z80filedecoder.h"
 #include "SpiSwitch.h"
 #include "SdNavigation.h"
-
-
 
 
 unsigned char KEY[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};

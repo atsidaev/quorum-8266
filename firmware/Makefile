@@ -31,6 +31,9 @@ OPTIONS = -w  -O2 -g -mtext-section-literals -mlongcalls -falign-functions=4 -ff
 #TFT_eSPI configuration (one can change SPI frequency too with -DSPI_FREQUENCY=80000000)
 DEFINES += -DUSER_SETUP_LOADED -DILI9341_DRIVER -DTFT_CS=PIN_D1 -DTFT_DC=PIN_D4 -DTFT_RST=-1
 
+# Z80 Library defines
+DEFINES += -DEXECZ80 -DLSB_FIRST
+
 CFLAGS += -std=gnu99 -fno-inline-functions -Wpointer-arith
 CFLAGS += ${INCLUDES}
 CFLAGS += ${DEFINES}
@@ -46,13 +49,14 @@ LDFLAGS += ${LIBRARY_PATH} --start-group -T eagle.app.v6.ld ${ARDUINO_TMP}/ardui
 
 # Project sources
 CXX_SRC := ${ARDUINO_TMP}/firmware.cpp SdNavigation.cpp SpiSwitch.cpp Zxdisplay.cpp Zxsound.cpp ShowKeyboard.cpp Z80filedecoder.cpp Zxkeyboard.cpp
+C_SRC += z80_operations.c
 
 # User libraries
 CXX_SRC += lib/TFT_eSPI/TFT_eSPI.cpp
 CXX_SRC += lib/SdFat/src/FatLib/FatFile.cpp lib/SdFat/src/FatLib/FatFileLFN.cpp lib/SdFat/src/FatLib/FatFileSFN.cpp lib/SdFat/src/FatLib/FatVolume.cpp
 CXX_SRC += lib/SdFat/src/SpiDriver/SdSpiESP8266.cpp
 CXX_SRC += lib/SdFat/src/SdCard/SdSpiCard.cpp
-C_SRC := conDebug.c debug.c z80.c
+C_SRC += lib/Z80/conDebug.c lib/Z80/debug.c lib/Z80/z80.c
 
 # Arduino core library
 ARDUINO_SRC := abi.cpp core_esp8266_main.cpp core_esp8266_wiring.c core_esp8266_wiring_digital.c core_esp8266_noniso.c core_esp8266_postmortem.c core_esp8266_timer.c core_esp8266_wiring_pwm.c 
@@ -110,12 +114,13 @@ ${ARDUINO_TMP}/arduino.ar: ${ARDUINO_SRC_TMP:=.o}
 	${AR} cru $@ $^
 
 clean:
-	rm quorum8266.hex Zxrom.h ${ROMS} || true
+	rm quorum8266.elf quorum8266.bin Zxrom.h ${ROMS} || true
 	rm -rf ${ARDUINO_TMP}
 	find -name '*.o' -delete
 
 quorum8266.elf: ${CXX_SRC:=.o} ${C_SRC:=.o} ${ARDUINO_TMP}/arduino.ar ${ARDUINO_INTERNAL_LIBS_TMP:=.o}
 	${LD} -o $@ $^ ${LDFLAGS}
+	size quorum8266.elf | awk '{print "RAM Used:", $$2 + $$3; }' | tail -n1
 
 quorum8266.bin: quorum8266.elf
 	${ESPTOOL} -eo "${ESP_SDK}/bootloaders/eboot/eboot.elf" -bo $@ -bm qio -bf 40 -bz 4M -bs .text -bp 4096 -ec -eo $< -bs .irom0.text -bs .text -bs .data -bs .rodata -bc -ec

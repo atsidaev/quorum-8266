@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include"z80.h"
-
+#include "z80_operations.h"
 #include "Z80filedecoder.h"
+#include "GlobalDef.h"
 
 extern Z80 state;
 extern unsigned char RAM[];
