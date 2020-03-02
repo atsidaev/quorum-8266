@@ -13,6 +13,8 @@
 #ifndef Z80_H
 #define Z80_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
