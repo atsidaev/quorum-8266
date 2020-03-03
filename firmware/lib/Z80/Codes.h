@@ -372,7 +372,7 @@ case DAA:
   if(R->AF.B.l&C_FLAG) J.W|=256;
   if(R->AF.B.l&H_FLAG) J.W|=512;
   if(R->AF.B.l&N_FLAG) J.W|=1024;
-  R->AF.W=DAATable[J.W];
+  R->AF.W=pgm_read_word(&DAATable[J.W]);
   break;
 
 default:

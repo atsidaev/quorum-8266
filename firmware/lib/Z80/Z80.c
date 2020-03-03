@@ -67,47 +67,47 @@ INLINE byte OpZ80(word A) { return(RAM[A>>13][A&0x1FFF]); }
 
 #define S(Fl)        R->AF.B.l|=Fl
 #define R(Fl)        R->AF.B.l&=~(Fl)
-#define FLAGS(Rg,Fl) R->AF.B.l=Fl|ZSTable[Rg]
+#define FLAGS(Rg,Fl) R->AF.B.l=Fl|pgm_read_byte(&ZSTable[Rg])
 
 #define M_RLC(Rg)      \
-  R->AF.B.l=Rg>>7;Rg=(Rg<<1)|R->AF.B.l;R->AF.B.l|=PZSTable[Rg]
+  R->AF.B.l=Rg>>7;Rg=(Rg<<1)|R->AF.B.l;R->AF.B.l|=pgm_read_byte(&PZSTable[Rg])
 #define M_RRC(Rg)      \
-  R->AF.B.l=Rg&0x01;Rg=(Rg>>1)|(R->AF.B.l<<7);R->AF.B.l|=PZSTable[Rg]
+  R->AF.B.l=Rg&0x01;Rg=(Rg>>1)|(R->AF.B.l<<7);R->AF.B.l|=pgm_read_byte(&PZSTable[Rg])
 #define M_RL(Rg)       \
   if(Rg&0x80)          \
   {                    \
     Rg=(Rg<<1)|(R->AF.B.l&C_FLAG); \
-    R->AF.B.l=PZSTable[Rg]|C_FLAG; \
+    R->AF.B.l=pgm_read_byte(&PZSTable[Rg])|C_FLAG; \
   }                    \
   else                 \
   {                    \
     Rg=(Rg<<1)|(R->AF.B.l&C_FLAG); \
-    R->AF.B.l=PZSTable[Rg];        \
+    R->AF.B.l=pgm_read_byte(&PZSTable[Rg]);        \
   }
 #define M_RR(Rg)       \
   if(Rg&0x01)          \
   {                    \
     Rg=(Rg>>1)|(R->AF.B.l<<7);     \
-    R->AF.B.l=PZSTable[Rg]|C_FLAG; \
+    R->AF.B.l=pgm_read_byte(&PZSTable[Rg])|C_FLAG; \
   }                    \
   else                 \
   {                    \
     Rg=(Rg>>1)|(R->AF.B.l<<7);     \
-    R->AF.B.l=PZSTable[Rg];        \
+    R->AF.B.l=pgm_read_byte(&PZSTable[Rg]);        \
   }
 
 #define M_SLA(Rg)      \
-  R->AF.B.l=Rg>>7;Rg<<=1;R->AF.B.l|=PZSTable[Rg]
+  R->AF.B.l=Rg>>7;Rg<<=1;R->AF.B.l|=pgm_read_byte(&PZSTable[Rg])
 #define M_SRA(Rg)      \
-  R->AF.B.l=Rg&C_FLAG;Rg=(Rg>>1)|(Rg&0x80);R->AF.B.l|=PZSTable[Rg]
+  R->AF.B.l=Rg&C_FLAG;Rg=(Rg>>1)|(Rg&0x80);R->AF.B.l|=pgm_read_byte(&PZSTable[Rg])
 
 #define M_SLL(Rg)      \
-  R->AF.B.l=Rg>>7;Rg=(Rg<<1)|0x01;R->AF.B.l|=PZSTable[Rg]
+  R->AF.B.l=Rg>>7;Rg=(Rg<<1)|0x01;R->AF.B.l|=pgm_read_byte(&PZSTable[Rg])
 #define M_SRL(Rg)      \
-  R->AF.B.l=Rg&0x01;Rg>>=1;R->AF.B.l|=PZSTable[Rg]
+  R->AF.B.l=Rg&0x01;Rg>>=1;R->AF.B.l|=pgm_read_byte(&PZSTable[Rg])
 
 #define M_BIT(Bit,Rg)  \
-  R->AF.B.l=(R->AF.B.l&C_FLAG)|H_FLAG|PZSTable[Rg&(1<<Bit)]
+  R->AF.B.l=(R->AF.B.l&C_FLAG)|H_FLAG|pgm_read_byte(&PZSTable[Rg&(1<<Bit)])
 
 #define M_SET(Bit,Rg) Rg|=1<<Bit
 #define M_RES(Bit,Rg) Rg&=~(1<<Bit)
@@ -137,7 +137,7 @@ INLINE byte OpZ80(word A) { return(RAM[A>>13][A&0x1FFF]); }
   J.W=R->AF.B.h+Rg;    \
   R->AF.B.l=           \
                        (~(R->AF.B.h^Rg)&(Rg^J.B.l)&0x80? V_FLAG:0)| \
-                       J.B.h|ZSTable[J.B.l]|                        \
+                       J.B.h|pgm_read_byte(&ZSTable[J.B.l])|                        \
                        ((R->AF.B.h^Rg^J.B.l)&H_FLAG);               \
   R->AF.B.h=J.B.l
 
@@ -145,7 +145,7 @@ INLINE byte OpZ80(word A) { return(RAM[A>>13][A&0x1FFF]); }
   J.W=R->AF.B.h-Rg;    \
   R->AF.B.l=           \
                        ((R->AF.B.h^Rg)&(R->AF.B.h^J.B.l)&0x80? V_FLAG:0)| \
-                       N_FLAG|-J.B.h|ZSTable[J.B.l]|                      \
+                       N_FLAG|-J.B.h|pgm_read_byte(&ZSTable[J.B.l])|                      \
                        ((R->AF.B.h^Rg^J.B.l)&H_FLAG);                     \
   R->AF.B.h=J.B.l
 
@@ -153,7 +153,7 @@ INLINE byte OpZ80(word A) { return(RAM[A>>13][A&0x1FFF]); }
   J.W=R->AF.B.h+Rg+(R->AF.B.l&C_FLAG); \
   R->AF.B.l=                           \
                                        (~(R->AF.B.h^Rg)&(Rg^J.B.l)&0x80? V_FLAG:0)| \
-                                       J.B.h|ZSTable[J.B.l]|              \
+                                       J.B.h|pgm_read_byte(&ZSTable[J.B.l])|              \
                                        ((R->AF.B.h^Rg^J.B.l)&H_FLAG);     \
   R->AF.B.h=J.B.l
 
@@ -161,7 +161,7 @@ INLINE byte OpZ80(word A) { return(RAM[A>>13][A&0x1FFF]); }
   J.W=R->AF.B.h-Rg-(R->AF.B.l&C_FLAG); \
   R->AF.B.l=                           \
                                        ((R->AF.B.h^Rg)&(R->AF.B.h^J.B.l)&0x80? V_FLAG:0)| \
-                                       N_FLAG|-J.B.h|ZSTable[J.B.l]|      \
+                                       N_FLAG|-J.B.h|pgm_read_byte(&ZSTable[J.B.l])|      \
                                        ((R->AF.B.h^Rg^J.B.l)&H_FLAG);     \
   R->AF.B.h=J.B.l
 
@@ -169,27 +169,27 @@ INLINE byte OpZ80(word A) { return(RAM[A>>13][A&0x1FFF]); }
   J.W=R->AF.B.h-Rg;    \
   R->AF.B.l=           \
                        ((R->AF.B.h^Rg)&(R->AF.B.h^J.B.l)&0x80? V_FLAG:0)| \
-                       N_FLAG|-J.B.h|ZSTable[J.B.l]|                      \
+                       N_FLAG|-J.B.h|pgm_read_byte(&ZSTable[J.B.l])|                      \
                        ((R->AF.B.h^Rg^J.B.l)&H_FLAG)
 
-#define M_AND(Rg) R->AF.B.h&=Rg;R->AF.B.l=H_FLAG|PZSTable[R->AF.B.h]
-#define M_OR(Rg)  R->AF.B.h|=Rg;R->AF.B.l=PZSTable[R->AF.B.h]
-#define M_XOR(Rg) R->AF.B.h^=Rg;R->AF.B.l=PZSTable[R->AF.B.h]
+#define M_AND(Rg) R->AF.B.h&=Rg;R->AF.B.l=H_FLAG|pgm_read_byte(&PZSTable[R->AF.B.h])
+#define M_OR(Rg)  R->AF.B.h|=Rg;R->AF.B.l=pgm_read_byte(&PZSTable[R->AF.B.h])
+#define M_XOR(Rg) R->AF.B.h^=Rg;R->AF.B.l=pgm_read_byte(&PZSTable[R->AF.B.h])
 
 #define M_IN(Rg)        \
   Rg=InZ80(R->BC.W);  \
-  R->AF.B.l=PZSTable[Rg]|(R->AF.B.l&C_FLAG)
+  R->AF.B.l=pgm_read_byte(&PZSTable[Rg])|(R->AF.B.l&C_FLAG)
 
 #define M_INC(Rg)       \
   Rg++;                 \
   R->AF.B.l=            \
-                        (R->AF.B.l&C_FLAG)|ZSTable[Rg]|           \
+                        (R->AF.B.l&C_FLAG)|pgm_read_byte(&ZSTable[Rg])|           \
                         (Rg==0x80? V_FLAG:0)|(Rg&0x0F? 0:H_FLAG)
 
 #define M_DEC(Rg)       \
   Rg--;                 \
   R->AF.B.l=            \
-                        N_FLAG|(R->AF.B.l&C_FLAG)|ZSTable[Rg]| \
+                        N_FLAG|(R->AF.B.l&C_FLAG)|pgm_read_byte(&ZSTable[Rg])| \
                         (Rg==0x7F? V_FLAG:0)|((Rg&0x0F)==0x0F? H_FLAG:0)
 
 #define M_ADDW(Rg1,Rg2) \
@@ -332,7 +332,7 @@ static void CodesCB(register Z80 *R)
   register byte I;
 
   I = OpZ80(R->PC.W++);
-  R->ICount -= CyclesCB[I];
+  R->ICount -= pgm_read_byte(&CyclesCB[I]);
   switch (I)
   {
 #include "CodesCB.h"
@@ -354,7 +354,7 @@ static void CodesDDCB(register Z80 *R)
 #define XX IX
   J.W = R->XX.W + (offset)OpZ80(R->PC.W++);
   I = OpZ80(R->PC.W++);
-  R->ICount -= CyclesXXCB[I];
+  R->ICount -= pgm_read_byte(&CyclesXXCB[I]);
   switch (I)
   {
 #include "CodesXCB.h"
@@ -377,7 +377,7 @@ static void CodesFDCB(register Z80 *R)
 #define XX IY
   J.W = R->XX.W + (offset)OpZ80(R->PC.W++);
   I = OpZ80(R->PC.W++);
-  R->ICount -= CyclesXXCB[I];
+  R->ICount -= pgm_read_byte(&CyclesXXCB[I]);
   switch (I)
   {
 #include "CodesXCB.h"
@@ -398,7 +398,7 @@ static void CodesED(register Z80 *R)
   register pair J;
 
   I = OpZ80(R->PC.W++);
-  R->ICount -= CyclesED[I];
+  R->ICount -= pgm_read_byte(&CyclesED[I]);
   switch (I)
   {
 #include "CodesED.h"
@@ -421,7 +421,7 @@ static void CodesDD(register Z80 *R)
 
 #define XX IX
   I = OpZ80(R->PC.W++);
-  R->ICount -= CyclesXX[I];
+  R->ICount -= pgm_read_byte(&CyclesXX[I]);
   switch (I)
   {
 #include "CodesXX.h"
@@ -448,7 +448,7 @@ static void CodesFD(register Z80 *R)
 
 #define XX IY
   I = OpZ80(R->PC.W++);
-  R->ICount -= CyclesXX[I];
+  R->ICount -= pgm_read_byte(&CyclesXX[I]);
   switch (I)
   {
 #include "CodesXX.h"
@@ -522,7 +522,7 @@ int ExecZ80(register Z80 *R, register int RunCycles)
       /* Read opcode and count cycles */
       I = OpZ80(R->PC.W++);
       /* Count cycles */
-      R->ICount -= Cycles[I];
+      R->ICount -= pgm_read_byte(&Cycles[I]);
 
       /* Interpret opcode */
       switch (I)
@@ -636,7 +636,7 @@ word16 RunZ80(Z80 *R)
 #endif
 
     I = OpZ80(R->PC.W++);
-    R->ICount -= Cycles[I];
+    R->ICount -= pgm_read_byte(&Cycles[I]);
 
     switch (I)
     {
