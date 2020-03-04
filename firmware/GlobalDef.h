@@ -11,7 +11,8 @@
 //#define TFT_RST 3
 
 
-
+#define ROMSIZE 16384 //49152
+#define RAMSIZE 49152
 
 #define SD3        10   //nodemcu available input
 
