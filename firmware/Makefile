@@ -1,5 +1,5 @@
 ESP_SDK := d:\\arduino_8266nowifi\\portable\\packages\\esp8266\\hardware\\esp8266\\2.4.0
-ARDUINO_TMP := .arduino.tmp
+BUILD_DIR := .build
 
 CC := xtensa-lx106-elf-gcc
 CXX := xtensa-lx106-elf-g++
@@ -45,18 +45,18 @@ CXXFLAGS += ${OPTIONS}
 CXXFLAGS += -Wno-delete-non-virtual-dtor-mlongcalls  -fno-exceptions -fno-rtti -fworking-directory -std=c++11 -x c++
 
 LDFLAGS = -nostdlib --no-check-sections -u call_user_start -u _printf_float -u _scanf_float -static --gc-sections -wrap system_restart_local -wrap spi_flash_read
-LDFLAGS += ${LIBRARY_PATH} --start-group -T eagle.app.v6.ld ${ARDUINO_TMP}/arduino.ar -lstdc++ -lm -lc -lmgcc -lloader -lsys
+LDFLAGS += ${LIBRARY_PATH} --start-group -T eagle.app.v6.ld ${BUILD_DIR}/arduino.ar -lstdc++ -lm -lc -lmgcc -lloader -lsys
 
 # Project sources
-CXX_SRC := ${ARDUINO_TMP}/firmware.cpp SdNavigation.cpp SpiSwitch.cpp Zxdisplay.cpp Zxsound.cpp ShowKeyboard.cpp Z80filedecoder.cpp Zxkeyboard.cpp
+CXX_SRC := ${BUILD_DIR}/firmware.cpp SdNavigation.cpp SpiSwitch.cpp Zxdisplay.cpp Zxsound.cpp ShowKeyboard.cpp Z80filedecoder.cpp Zxkeyboard.cpp
 C_SRC += z80_operations.c
 
 # User libraries
-CXX_SRC += lib/TFT_eSPI/TFT_eSPI.cpp
-CXX_SRC += lib/SdFat/src/FatLib/FatFile.cpp lib/SdFat/src/FatLib/FatFileLFN.cpp lib/SdFat/src/FatLib/FatFileSFN.cpp lib/SdFat/src/FatLib/FatVolume.cpp
-CXX_SRC += lib/SdFat/src/SpiDriver/SdSpiESP8266.cpp
-CXX_SRC += lib/SdFat/src/SdCard/SdSpiCard.cpp
-C_SRC += lib/Z80/conDebug.c lib/Z80/debug.c lib/Z80/z80.c
+CXX_LIB_SRC += lib/TFT_eSPI/TFT_eSPI.cpp
+CXX_LIB_SRC += lib/SdFat/src/FatLib/FatFile.cpp lib/SdFat/src/FatLib/FatFileLFN.cpp lib/SdFat/src/FatLib/FatFileSFN.cpp lib/SdFat/src/FatLib/FatVolume.cpp
+CXX_LIB_SRC += lib/SdFat/src/SpiDriver/SdSpiESP8266.cpp
+CXX_LIB_SRC += lib/SdFat/src/SdCard/SdSpiCard.cpp
+C_LIB_SRC += lib/Z80/conDebug.c lib/Z80/debug.c lib/Z80/z80.c
 
 # Arduino core library
 ARDUINO_SRC := abi.cpp core_esp8266_main.cpp core_esp8266_wiring.c core_esp8266_wiring_digital.c core_esp8266_noniso.c core_esp8266_postmortem.c core_esp8266_timer.c core_esp8266_wiring_pwm.c 
@@ -66,8 +66,13 @@ ARDUINO_SRC += Esp.cpp FS.cpp HardwareSerial.cpp Print.cpp Schedule.cpp Stream.c
 # Other Arduino libraries
 ARDUINO_INTERNAL_LIBS += SPI.cpp
 
-ARDUINO_SRC_TMP := $(addprefix ${ARDUINO_TMP}/, ${ARDUINO_SRC})
-ARDUINO_INTERNAL_LIBS_TMP := $(addprefix ${ARDUINO_TMP}/, ${ARDUINO_INTERNAL_LIBS})
+# Put target for all 3rd party sources to BUILD_DIR
+
+CXX_LIB_OBJ := $(addprefix ${BUILD_DIR}/, ${CXX_LIB_SRC:=.o})
+C_LIB_OBJ := $(addprefix ${BUILD_DIR}/, ${C_LIB_SRC:=.o})
+
+ARDUINO_SRC_TMP := $(addprefix ${BUILD_DIR}/, ${ARDUINO_SRC})
+ARDUINO_INTERNAL_LIBS_TMP := $(addprefix ${BUILD_DIR}/, ${ARDUINO_INTERNAL_LIBS})
 
 all: quorum8266.bin
 
@@ -78,26 +83,36 @@ Zxrom.h: roms/ZX48.ROM
 
 # Generic rules for .c/.cpp files copy
 
-${ARDUINO_TMP}/%.cpp: ${ESP_SDK}/cores/esp8266/%.cpp
-	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
+${BUILD_DIR}/%.cpp: ${ESP_SDK}/cores/esp8266/%.cpp
+	[ -d ${BUILD_DIR} ] || mkdir ${BUILD_DIR}
 	cp $< $@
 
-${ARDUINO_TMP}/%.c: ${ESP_SDK}/cores/esp8266/%.c
-	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
+${BUILD_DIR}/%.c: ${ESP_SDK}/cores/esp8266/%.c
+	[ -d ${BUILD_DIR} ] || mkdir ${BUILD_DIR}
 	cp $< $@
 
-${ARDUINO_TMP}/firmware.cpp: firmware.ino Zxrom.h
-	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
+${BUILD_DIR}/firmware.cpp: firmware.ino Zxrom.h
+	[ -d ${BUILD_DIR} ] || mkdir ${BUILD_DIR}
 	cp $< $@
+
+# Generic rules for 3rd party libraries build
+
+$(CXX_LIB_OBJ): ${BUILD_DIR}/%.cpp.o: %.cpp
+	mkdir -p $(dir $@)
+	${CXX} ${CXXFLAGS} -c $< -o $@
+
+$(C_LIB_OBJ): ${BUILD_DIR}/%.c.o: %.c
+	mkdir -p $(dir $@)
+	${CC} ${CFLAGS} -c $< -o $@
 
 # Couple of files are stored in somewhere in Arduino subdirectories. I'm too lazy to implement generic rule for them
 
-${ARDUINO_TMP}/SPI.cpp: ${ESP_SDK}/libraries/SPI/SPI.cpp
-	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
+${BUILD_DIR}/SPI.cpp: ${ESP_SDK}/libraries/SPI/SPI.cpp
+	[ -d ${BUILD_DIR} ] || mkdir ${BUILD_DIR}
 	cp $< $@
 
-${ARDUINO_TMP}/umm_malloc.c: ${ESP_SDK}/cores/esp8266/umm_malloc/umm_malloc.c
-	[ -d ${ARDUINO_TMP} ] || mkdir ${ARDUINO_TMP}
+${BUILD_DIR}/umm_malloc.c: ${ESP_SDK}/cores/esp8266/umm_malloc/umm_malloc.c
+	[ -d ${BUILD_DIR} ] || mkdir ${BUILD_DIR}
 	cp $< $@
 
 # Build rules
@@ -110,15 +125,15 @@ ${ARDUINO_TMP}/umm_malloc.c: ${ESP_SDK}/cores/esp8266/umm_malloc/umm_malloc.c
 
 # Make arduino.ar archive the same way the IDE does it
 
-${ARDUINO_TMP}/arduino.ar: ${ARDUINO_SRC_TMP:=.o}
+${BUILD_DIR}/arduino.ar: ${ARDUINO_SRC_TMP:=.o}
 	${AR} cru $@ $^
 
 clean:
 	rm quorum8266.elf quorum8266.bin Zxrom.h ${ROMS} || true
-	rm -rf ${ARDUINO_TMP}
+	rm -rf ${BUILD_DIR}
 	find -name '*.o' -delete
 
-quorum8266.elf: ${CXX_SRC:=.o} ${C_SRC:=.o} ${ARDUINO_TMP}/arduino.ar ${ARDUINO_INTERNAL_LIBS_TMP:=.o}
+quorum8266.elf: ${CXX_SRC:=.o} ${C_SRC:=.o} ${CXX_LIB_OBJ} ${C_LIB_OBJ} ${BUILD_DIR}/arduino.ar ${ARDUINO_INTERNAL_LIBS_TMP:=.o}
 	${LD} -o $@ $^ ${LDFLAGS}
 	size quorum8266.elf | awk '{print "RAM Used:", $$2 + $$3; }' | tail -n1
 

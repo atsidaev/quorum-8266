@@ -1,4 +1,4 @@
-/firmware/.arduino.tmp
+/firmware/.build
 /firmware/*.o
 /firmware/Zxrom.h
 /firmware/quorum8266.bin
