@@ -15,6 +15,9 @@ int zxDisplayBorderGet(void);
 
 void zxDisplayScan(void);
 
+void  zxDisplayStartWrite(void);
+void  zxDisplayContinueWrite(char*buffer, int counter);
+void  zxDisplayStopWrite(void);
 
 void zxDisplayReset(void);
 void zxDisplayDisableInterrupt(void);

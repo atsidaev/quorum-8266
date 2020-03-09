@@ -12,7 +12,7 @@
 #include "Zxdisplay.h"
 #include "GlobalDef.h"
 #include "SpiSwitch.h"
-
+#include "Hardware/Keyboard.h"
 
 boolean keyboardCheckAny(unsigned char *pBuffer, int len);
 boolean keyboardCheckKeyStatusRowCol(unsigned char *pBuffer, int iRow, int iCol, unsigned char  * off, unsigned char * mask);

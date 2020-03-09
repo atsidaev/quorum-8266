@@ -1,19 +1,10 @@
-
 /*
    acknowledge of others valuable works:
-
    Marat Fayzullin for z80 cpu emulation
-
    https://mikrocontroller.bplaced.net/wordpress/?page_id=756
-
    https://github.com/uli/Arduino_nowifi
-
    https://github.com/greiman/SdFat
-
 */
-
-
-
 
 #include <Arduino.h>
 #include "Zxdisplay.h"
@@ -26,26 +17,11 @@
 #include "Z80filedecoder.h"
 #include "SpiSwitch.h"
 #include "SdNavigation.h"
+#include "Hardware/SerialKeyboard.h"
 
+void process_keyboard_events();
 
-unsigned char KEY[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-unsigned char KEMPSTONJOYSTICK = 0x00;
-//0..7 used for zx spectrum keyboard emulation
-//[8] used for kempston joystik and special keys
-//0=right
-//1=left
-//2=down
-//3=up
-//4=button2
-//5=button1
-//6=ESC key
-//7=
-
-//to simulate keyboard with 6 joy keys
-unsigned char *pJoyKeyAdd[6] = {NULL, NULL, NULL, NULL, NULL, NULL};
-unsigned char  pJoyKeyVal[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-//up down left right f1 f2
-
+static char ongoingtask = EMUTASK_EMULATOR; //0=emulator,1=file browser,2=display keyboard,3=load demo from rom
 
 unsigned char RAM[RAMSIZE];//48k
 unsigned char CACHE[ZXSCREENSIZE]; //used for video backup and file decoding
@@ -60,14 +36,20 @@ char zxInterruptPending = 0;//enabled by interrupt routine
 int timerfreq = 50; //default
 unsigned char soundenabled = 1; //default sound on
 
+void zxEnableInterrupt();
+void zxDisableInterrupt();
 
 void ICACHE_FLASH_ATTR stampabinario(unsigned char c);
 
+int ticks = 0, last_ticks = 0;
+int int_count = 0;
+
+volatile uint16_t timer_int = 0;
 
 void ICACHE_FLASH_ATTR setup() {
-  //SET 160MHZ
-  REG_SET_BIT(0x3ff00014, BIT(0));
-  ets_update_cpu_frequency(160);
+#ifdef DEBUG_PRINT
+  Serial.begin(115200);
+#endif.
 
   spiSwitchSetup();
 
@@ -76,24 +58,46 @@ void ICACHE_FLASH_ATTR setup() {
   zxKeyboardSetup();
   zxSoundSetup();
 
-#ifdef DEBUG_PRINT
-  Serial.begin(115200);
-#endif.
+  zxEnableInterrupt();
 
   ResetZ80(&state);
-
-
 }
 
+/////////////////////////////////////
 
+// SPI_FREQUENCY - frequency of screen's bus
 
+#define TIMER_DIVISOR 12500 // 100000 interrupts per second
+int TIMER_50HZ = 2000; //480=50hz
+//every 480 interrupt, timer keyboard is read instead of writing display
 
+volatile int zxDisplay_timer_counter_50hz = 0;
 
+//called 100000 times per second
+void zxDisplay_timer1_ISR (void) {
+  timer_int++;
+}
 
+void zxEnableInterrupt()
+{
+	timer1_disable();
+	timer1_attachInterrupt(zxDisplay_timer1_ISR);
+	timer1_isr_init();
 
+	/*
+	160 Mhz ESP, 3.5 MHz Z80, 50 Hz screen, 2400 screen updates per frame (120000 per second)
 
+	TIM_DIV16 gives us 10 Mhz of base timer freq
+	TIMER_DIVISOR = 83, which gives us 120481 executions of interrupt per second
 
+	Each frame: 32 pixels, then 32 tacts CPU
+	*/
 
+	timer1_enable(TIM_DIV265, TIM_EDGE, TIM_LOOP);//80mhz/16=5mhz
+	// 2400 blocks of 32 pixel to redraw the screen
+	//to get 10hz-->24000 interrupt-->divisor 208
+	timer1_write(TIMER_DIVISOR);
+}
 
 int ICACHE_FLASH_ATTR showJoystick()
 {
@@ -143,16 +147,7 @@ int ICACHE_FLASH_ATTR showJoystick()
       waitforclearkeyb();
       return -1;
   }
-
-
 }
-
-
-
-
-
-
-
 
 //return 0 to do nothing
 //1..n to select an option
@@ -188,8 +183,6 @@ int ICACHE_FLASH_ATTR showMenu()
         break;
     }
 
-
-
     sdNavigationPrintFStrBig(0, 8, F("5 Timer ..Hz"), COLOR_TEXT);
     sdNavigationPrintChBig(16, 8, '0' + (timerfreq / 10), COLOR_TEXT);
     sdNavigationPrintChBig(18, 8, '0' + (timerfreq % 10), COLOR_TEXT);
@@ -208,15 +201,10 @@ int ICACHE_FLASH_ATTR showMenu()
     sdNavigationPrintFStrBig(0, 14, F("R Reset"), COLOR_TEXT);
     sdNavigationPrintFStrBig(0, 16, F("S Save Z80 file"), COLOR_TEXT);
 
-
-
-    //before returning wait for an empity kayb buffer
+    //before returning wait for an empty keyb buffer
     waitforclearkeyb();
     return 0;
   }
-
-
-
 
   if (   checkKeybBreak() || checkKeyBit(&(KEY[4]),  BUTTON_0)
          || (KEMPSTONJOYSTICK && BUTTON_LEFT) ) //'0' key or left
@@ -251,9 +239,7 @@ int ICACHE_FLASH_ATTR showMenu()
     return -1;//back to old program
   }
 
-
-
-  if (   checkKeyBit(&(KEY[4]),  BUTTON_6) ) //'6'
+  if (checkKeyBit(&(KEY[4]),  BUTTON_6) ) //'6'
   {
     soundenabled ^= 1;
     bdisplayedmenu = false;
@@ -314,7 +300,6 @@ int ICACHE_FLASH_ATTR showMenu()
     return 0;
   }
 
-
   if (checkKeyBit(&(KEY[3]),  BUTTON_5) ) //'4'
   {
     switch (timerfreq)
@@ -339,401 +324,118 @@ int ICACHE_FLASH_ATTR showMenu()
     return 0;
   }
 
-
-
-
-
   return 0;
 }
-
-
-
-
-/*
-  int showFreqMenu()
-  {
-  static boolean bdisplayedmenu = false;
-  if (!bdisplayedmenu)
-  {
-    bdisplayedmenu = true;
-    sdNavigationCls(COLOR_TEXT);
-    sdNavigationPrintFStr(5, 2,  F("0 back to emulator"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 3,  F("1 Fastest----"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 4,  F("2 Faster----"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 5,  F("3 Equal----"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 6, F("4 Lower---"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 7, F("5 Lowest-"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 8, F("Q 75Hz interrupt"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 9, F("W 62,5Hz interrupt"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 10, F("E 50Hz interrupt"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 9, F("R 38,5Hz interrupt"), COLOR_TEXT);
-    sdNavigationPrintFStr(5, 10, F("T 25Hz interrupt"), COLOR_TEXT);
-    return 0;
-  }
-
-
-  if (   checkKeyBit(&(KEY[4]),  BUTTON_0)
-         || checkKeyBit(&KEMPSTONJOYSTICK,  BUTTON_LEFT) ) //'0' key or left
-  {
-    bdisplayedmenu = false;
-    return -1;//back to old program
-  }
-
-
-
-  if (checkKeyBit(&(KEY[2]),  BUTTON_Q) ) //'1'
-  {
-    zxDisplaySetIntFrequency(75);
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[2]),  BUTTON_W) ) //'2'
-  {
-    zxDisplaySetIntFrequency(62);
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[2]),  BUTTON_E) ) //'3'
-  {
-    zxDisplaySetIntFrequency(50);
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[2]),  BUTTON_R) ) //'3'
-  {
-    zxDisplaySetIntFrequency(38);
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[2]),  BUTTON_T) ) //'3'
-  {
-    zxDisplaySetIntFrequency(25);
-    return 0;
-  }
-
-
-
-  if (checkKeyBit(&(KEY[3]),  BUTTON_1) ) //'1'
-  {
-    cpuDELAY = 50000;
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[3]),  BUTTON_2) ) //'2'
-  {
-    cpuDELAY = 30000;
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[3]),  BUTTON_3) ) //'3'
-  {
-    cpuDELAY = 5000;
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[3]),  BUTTON_4) ) //'4'
-  {
-    cpuDELAY = 2000;
-    return 0;
-  }
-  if (checkKeyBit(&(KEY[3]),  BUTTON_5) ) //'5'
-  {
-    cpuDELAY = 500;
-    return 0;
-  }
-
-  return 0;
-  }
-*/
-
-#ifdef DEBUG_PRINT
-
-void ICACHE_FLASH_ATTR simulate_key(char cRead, char cCheck, unsigned char cBit, unsigned char *KEY, unsigned long *ulResetSerialKeyboard)
-{
-  if (cRead == cCheck)
-  {
-    *KEY = 0xff - cBit;
-    *ulResetSerialKeyboard = millis() + 50;
-  }
-}
-#endif
 
 void loop() {
+	while (true)
+	{
+		const int ticks_per_iteration = 32;
+		for (uint16_t i = 0; i < (76800 / ticks_per_iteration); i++)
+		{
+			for (uint8_t k = 0; k < ticks_per_iteration / 32; k++)
+				zxDisplayScan();//show 32 pixel at a time
 
+			ExecZ80(&state, ticks_per_iteration);
+			ticks += ticks_per_iteration;
+		}
 
-  //
-  //char cc= getPressedCharacter();
-  //if(cc)
-  //{
-  //   DEBUG_PRINTLN("Key");
-  //   DEBUG_PRINTLN(cc);
-  //  }
+		// Detect skipped 50Hz interrupts - if there are any, we should do frame skipping OR speed up the processing
+		if (timer_int > 1)
+		{
+			Serial.println(timer_int);
+		}
 
+		IntZ80(&state, INT_IRQ);
 
-#ifdef DEBUG_PRINT
+		serial_keyboard_read();
 
+		// Check if we need to change state of emulator because of pressed keys
+		// process_keyboard_events();
 
-  // if (KEMPSTONJOYSTICK != 0)
-  // {
-  //   DEBUG_PRINTLN(KEMPSTONJOYSTICK);
-  // }
-
-
-  //stampabinario(KEY[0]);DEBUG_PRINT("-");
-  //stampabinario(KEY[1]);DEBUG_PRINTLN("");
-  // stampabinario(KEY[2]);DEBUG_PRINT("-");
-  //stampabinario(KEY[3]);DEBUG_PRINTLN("");
-  //stampabinario(KEY[4]);DEBUG_PRINT("-");
-  //stampabinario(KEY[5]);DEBUG_PRINTLN("");
-  //stampabinario(KEY[6]);DEBUG_PRINT("-");
-  // stampabinario(KEY[7]);DEBUG_PRINTLN("");
-  // if (KEMPSTONJOYSTICK != 0)
-  // stampabinario(KEMPSTONJOYSTICK); DEBUG_PRINTLN("");
-
-
-
-
-  //simulation of zx keyboard from serial data
-  static unsigned long ulResetSerialKeyboard = 0;
-  unsigned long ulNow = millis();
-  if (ulNow > ulResetSerialKeyboard && ulResetSerialKeyboard)
-  {
-    ulResetSerialKeyboard = 0;
-    KEMPSTONJOYSTICK = 0;
-    KEY[0] = KEY[1] = KEY[2] = KEY[3] = KEY[4] = KEY[5] = KEY[6] = KEY[7] = 0xff;
-  }
-  if (Serial.available())
-  {
-    char cRead = Serial.read();
-
-    simulate_key(cRead, 'y', BUTTON_Y, &KEY[5], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'u', BUTTON_U, &KEY[5], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'i', BUTTON_I, &KEY[5], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'o', BUTTON_O, &KEY[5], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'p', BUTTON_P, &KEY[5], &ulResetSerialKeyboard);
-
-    simulate_key(cRead, 'h', BUTTON_Y, &KEY[6], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'j', BUTTON_U, &KEY[6], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'k', BUTTON_I, &KEY[6], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'l', BUTTON_O, &KEY[6], &ulResetSerialKeyboard);
-    simulate_key(cRead, '\\', BUTTON_P, &KEY[6], &ulResetSerialKeyboard);
-
-    simulate_key(cRead, 'b', BUTTON_Y, &KEY[7], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'n', BUTTON_U, &KEY[7], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'm', BUTTON_I, &KEY[7], &ulResetSerialKeyboard);
-    simulate_key(cRead, '<', BUTTON_O, &KEY[7], &ulResetSerialKeyboard);
-    simulate_key(cRead, ' ', BUTTON_P, &KEY[7], &ulResetSerialKeyboard);
-
-
-    simulate_key(cRead, '0', BUTTON_0, &KEY[4], &ulResetSerialKeyboard);
-    simulate_key(cRead, '9', BUTTON_9, &KEY[4], &ulResetSerialKeyboard);
-    simulate_key(cRead, '8', BUTTON_8, &KEY[4], &ulResetSerialKeyboard);
-    simulate_key(cRead, '7', BUTTON_7, &KEY[4], &ulResetSerialKeyboard);
-    simulate_key(cRead, '6', BUTTON_6, &KEY[4], &ulResetSerialKeyboard);
-
-    simulate_key(cRead, '1', BUTTON_1, &KEY[3], &ulResetSerialKeyboard);
-    simulate_key(cRead, '2', BUTTON_2, &KEY[3], &ulResetSerialKeyboard);
-    simulate_key(cRead, '3', BUTTON_3, &KEY[3], &ulResetSerialKeyboard);
-    simulate_key(cRead, '4', BUTTON_4, &KEY[3], &ulResetSerialKeyboard);
-    simulate_key(cRead, '5', BUTTON_5, &KEY[3], &ulResetSerialKeyboard);
-
-    simulate_key(cRead, 'q', BUTTON_1, &KEY[2], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'w', BUTTON_2, &KEY[2], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'e', BUTTON_3, &KEY[2], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'r', BUTTON_4, &KEY[2], &ulResetSerialKeyboard);
-    simulate_key(cRead, 't', BUTTON_5, &KEY[2], &ulResetSerialKeyboard);
-
-
-    simulate_key(cRead, 'a', BUTTON_1, &KEY[1], &ulResetSerialKeyboard);
-    simulate_key(cRead, 's', BUTTON_2, &KEY[1], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'd', BUTTON_3, &KEY[1], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'f', BUTTON_4, &KEY[1], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'g', BUTTON_5, &KEY[1], &ulResetSerialKeyboard);
-
-
-    simulate_key(cRead, '>', BUTTON_1, &KEY[0], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'z', BUTTON_2, &KEY[0], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'x', BUTTON_3, &KEY[0], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'c', BUTTON_4, &KEY[0], &ulResetSerialKeyboard);
-    simulate_key(cRead, 'v', BUTTON_5, &KEY[0], &ulResetSerialKeyboard);
-
-
-
-
-    if (cRead == '|') //esc
-    {
-      KEMPSTONJOYSTICK = BUTTON_ESC; //esc special key
-      ulResetSerialKeyboard = ulNow + 50;
-    }
-
-
-
-  }
-#endif
-
-  static char ongoingtask = EMUTASK_EMULATOR; //0=emulator,1=file browser,2=display keyboard,3=load demo from rom
-
-
-
-  switch (ongoingtask)
-  {
-    case EMUTASK_EMULATOR: //emulator
-
-
-      if (KEMPSTONJOYSTICK & BUTTON_ESC ) //'ESC special key
-      {
-        // DEBUG_PRINTLN("ESC");
-        ongoingtask = EMUTASK_MENU;//keyb display
-        memcpy(CACHE, RAM, ZXSCREENSIZE);
-        break;
-      }
-
-
-      ExecZ80(&state, 50000);
-      if (zxInterruptPending) //set=1 by screen routine at the end of draw
-      {
-        zxInterruptPending = 0;
-        IntZ80(&state, INT_IRQ);
-#ifdef BORDERCOLORCHANGE1HZ
-        static int border = 0;
-        static int cnt = 0;
-        cnt++;
-        if (cnt == 50)
-        {
-          cnt = 0;
-          zxDisplayBorderSet(border);
-          border++;
-          if (border == 8)border = 0;
-        }
-#endif
-      }
-      break;
-    case EMUTASK_MENU:
-      {
-        int iReturn = showMenu();
-        if (iReturn < 0)
-        { //back to old program
-          ongoingtask = EMUTASK_EMULATOR;
-          memcpy(RAM, CACHE, ZXSCREENSIZE);//restore screen
-          waitforclearkeyb();
-        }
-        if (iReturn > 0)
-        {
-          ongoingtask = iReturn;
-        }
-      }
-      break;
-
-    case EMUTASK_JOY:
-      if (showJoystick() < 0)
-      { //back to old program
-        ongoingtask = EMUTASK_EMULATOR;
-        memcpy(RAM, CACHE, ZXSCREENSIZE);//restore screen
-        waitforclearkeyb();
-      }
-      break;
-
-    case EMUTASK_KEYB:
-      if (showKeyboard() < 0)
-      { //back to old program
-        ongoingtask = EMUTASK_EMULATOR;
-        memcpy(RAM, CACHE, ZXSCREENSIZE);//restore screen
-        waitforclearkeyb();
-      }
-      break;
-
-    case EMUTASK_SD://file browser
-      switch (sdNavigation(false))
-      {
-        case -1://back to old program
-          ongoingtask = EMUTASK_EMULATOR;
-          memcpy(RAM, CACHE, ZXSCREENSIZE);
-          waitforclearkeyb();
-          break;
-        case 2://jump to new proGRAM
-          ongoingtask = EMUTASK_EMULATOR;
-          break;
-      }
-      break;
-    case EMUTASK_EPROM://eprom browser
-      switch (sdNavigation(true))
-      {
-        case -1://back to old program
-          ongoingtask = EMUTASK_EMULATOR;
-          memcpy(RAM, CACHE, ZXSCREENSIZE);
-          waitforclearkeyb();
-          break;
-        case 2://jump to new proGRAM
-          ongoingtask = EMUTASK_EMULATOR;
-          break;
-      }
-      break;
-
-  }
+		while (timer_int == 0) {}
+		timer_int = 0;
+	}
 }
 
+void process_keyboard_events()
+{
+	switch (ongoingtask)
+	{
+		case EMUTASK_EMULATOR: //emulator
+			if (KEMPSTONJOYSTICK & BUTTON_ESC) //'ESC special key
+			{
+				DEBUG_PRINTLN("ESC");
+				ongoingtask = EMUTASK_MENU;//keyb display
+				memcpy(CACHE, RAM, ZXSCREENSIZE);
+				break;
+			}
+		case EMUTASK_MENU:
+		{
+			int iReturn = showMenu();
+			if (iReturn < 0)
+			{
+				//back to old program
+				ongoingtask = EMUTASK_EMULATOR;
+				memcpy(RAM, CACHE, ZXSCREENSIZE);//restore screen
+				waitforclearkeyb();
+			}
+			if (iReturn > 0)
+			{
+				ongoingtask = iReturn;
+			}
+		}
+		break;
 
-/*zxKeyboardStartRead();
-  zxKeyboardStopRead();
-  volatile uint8_t *p=(volatile uint8_t *)(0x60000000+0x140);
-     stampabinario(*p);p++;DEBUG_PRINT("-");
-     stampabinario(*p);p++;DEBUG_PRINT("-");
-     stampabinario(*p);p++;DEBUG_PRINT("-");
-     stampabinario(*p);p++;DEBUG_PRINT("-");
-     stampabinario(*p);p++;DEBUG_PRINT("-");
-     stampabinario(*p);p++;DEBUG_PRINT("-");
-     stampabinario(*p);p++;DEBUG_PRINTLN("");
+		case EMUTASK_JOY:
+			if (showJoystick() < 0)
+			{
+				//back to old program
+				ongoingtask = EMUTASK_EMULATOR;
+				memcpy(RAM, CACHE, ZXSCREENSIZE);//restore screen
+				waitforclearkeyb();
+			}
+			break;
 
-  return;
-*/
+		case EMUTASK_KEYB:
+			if (showKeyboard() < 0)
+			{
+				//back to old program
+				ongoingtask = EMUTASK_EMULATOR;
+				memcpy(RAM, CACHE, ZXSCREENSIZE);//restore screen
+				waitforclearkeyb();
+			}
+			break;
 
+		case EMUTASK_SD://file browser
+			switch (sdNavigation(false))
+			{
+				case -1://back to old program
+					ongoingtask = EMUTASK_EMULATOR;
+					memcpy(RAM, CACHE, ZXSCREENSIZE);
+					waitforclearkeyb();
+					break;
+				case 2://jump to new proGRAM
+					ongoingtask = EMUTASK_EMULATOR;
+					break;
+			}
+			break;
+		case EMUTASK_EPROM://eprom browser
+			switch (sdNavigation(true))
+			{
+				case -1://back to old program
+					ongoingtask = EMUTASK_EMULATOR;
+					memcpy(RAM, CACHE, ZXSCREENSIZE);
+					waitforclearkeyb();
+					break;
+				case 2://jump to new proGRAM
+					ongoingtask = EMUTASK_EMULATOR;
+					break;
+			}
+			break;
 
-//static   uint32_t lastInterrupt = 0;
-//uint32_t now;
-//static int col = 0;
-
-
-//
-//
-//if (zxKeyboardGetSpecialKey())
-//{
-// DEBUG_PRINTLN(state.PC.W);
-//     stampabinario(KEY[0]);DEBUG_PRINT("-");
-//     stampabinario(KEY[1]);DEBUG_PRINTLN("");
-//     stampabinario(KEY[2]);DEBUG_PRINT("-");
-//     stampabinario(KEY[3]);DEBUG_PRINTLN("");
-//     stampabinario(KEY[4]);DEBUG_PRINT("-");
-//     stampabinario(KEY[5]);DEBUG_PRINTLN("");
-//     stampabinario(KEY[6]);DEBUG_PRINT("-");
-//        stampabinario(KEY[7]);DEBUG_PRINTLN("");
-//
-//}
-
-
-//ExecZ80(&state, 10000);
-
-
-
-
-//now = millis();
-//if ((now - lastInterrupt) >= 20)
-//{
-//   DEBUG_PRINTLN(state.pc);
-// lastInterrupt =  now  ;
-//  IntZ80(&state, INT_IRQ);
-//    zxDisplayBorderSet(col);
-//    col++;
-//   col = col & 7;
-//IntZ80(&state, 0xffff);
-//    if ( state.status & Z80_STATUS_FLAG_HALT) state.pc++;
-
-//  static char c=0;
-//zxSoundSet(c);
-//c^=1;
-
-//}
-
-
-
-
-
-
-
-
-
+	}
+}
 
 void ICACHE_FLASH_ATTR stampabinario(unsigned char c)
 {
@@ -746,10 +448,3 @@ void ICACHE_FLASH_ATTR stampabinario(unsigned char c)
   DEBUG_PRINT(c & 2 ? "1" : "0");
   DEBUG_PRINT(c & 1 ? "1" : "0");
 }
-//
-//
-//
-//void  stampachar(unsigned char c) {
-//  DEBUG_PRINT(c);
-//  DEBUG_PRINT(",");
-//}

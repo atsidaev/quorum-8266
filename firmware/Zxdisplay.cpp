@@ -13,21 +13,6 @@
 
 TFT_eSPI zxDisplayTft = TFT_eSPI();       // Invoke custom library
 
-void  zxDisplayStartWrite(void);
-void  zxDisplayContinueWrite(char*buffer, int counter);
-void  zxDisplayStopWrite(void);
-
-
-#define TIMER_DIVISOR 208//24000 interrupts per second
-int TIMER_50HZ = 480; //480=50hz
-//every 480 interrupt, timer keyboard is read instead of writing display
-extern char zxInterruptPending;//set to 1 to start interrupt
-
-
-
-volatile int zxDisplay_timer_counter_50hz = 0;
-
-
 #define HW_FOREGROUND_RED_HI  0x07E0
 #define HW_FOREGROUND_GREEN_HI 0x001F
 #define HW_FOREGROUND_BLUE_HI 0xF800
@@ -86,19 +71,6 @@ extern "C" {
     return hw_32bits_colors[i];
   }
 }
-
-
-
-//changing the timer you can slowdown a game
-void zxDisplaySetIntFrequency(int freqHz)
-{
-  TIMER_50HZ = 480 * 50 / freqHz;
-}
-
-
-
-
-
 
 //start SPI transfer. wait for other transfer pending
 void zxDisplayStartWrite()
@@ -252,8 +224,6 @@ void zxDisplayOutputReg()
   SPI1W13 = zxDisplayBuffer[13];
   SPI1W14 = zxDisplayBuffer[14];
   SPI1W15 = zxDisplayBuffer[15];
-
-
 }
 
 
@@ -266,8 +236,6 @@ void zxDisplayScan()
   uint32_t backcol = 0;
 
   if (SPI1CMD & SPIBUSY) return; //dma in use now...
-
-
 
   if (zxDisplayY < 24 || zxDisplayY >= (24 + 192))
   {
@@ -344,44 +312,6 @@ void zxDisplayScan()
   }
 }
 
-
-
-
-
-
-//called 24000 times per second
-//every time 32 pixels are copied to tft
-void zxDisplay_timer1_ISR (void) {
-
-
-  static boolean zxKeyboardReading = false;//true when returning from a keyboard spi cicle
-  if (zxKeyboardReading == true )
-  { //keyboard reading ongoing?
-    zxKeyboardReading = false;
-    #ifdef ZXKEYBOARDENABLED
-    zxKeyboardStopRead();
-    #endif
-    zxInterruptPending = 1; //start interrupt 50 times per second AFTER keyboard read
-  }
-
-
-  zxDisplay_timer_counter_50hz++;
-  if (zxDisplay_timer_counter_50hz >= TIMER_50HZ)
-  {
-    zxDisplayStopWrite();
-    #ifdef ZXKEYBOARDENABLED
-    zxKeyboardStartRead();
-    #endif
-    zxKeyboardReading = true;
-    zxDisplay_timer_counter_50hz = 0;
-    return;
-  }
-
-  zxDisplayScan();//show 32 pixel at a time
-
-}
-
-
 void zxDisplayReset()
 {
   spiSwitchSet(TFT_CS);
@@ -396,40 +326,12 @@ void zxDisplayReset()
   zxDisplayScanToggle = 0;
 }
 
-
-
-
-
-void zxDisplayDisableInterrupt()
-{
-#ifdef ZXDISPLAYUSEINTERRUPT
-  timer1_disable();
-#endif
-}
-void zxDisplayEnableInterrupt()
-{
-
-#ifdef ZXDISPLAYUSEINTERRUPT
-  timer1_disable();
-  timer1_attachInterrupt(zxDisplay_timer1_ISR);
-  timer1_isr_init();
-  //30ms full display . 32 pixel every tick-->2400 tick for a full frame-->12,5micro seconds to send 32 pixel
-  timer1_enable(TIM_DIV16, TIM_EDGE, TIM_LOOP);//80mhz/16=5mhz
-  // 2400 blocks of 32 pixel to redraw the screen
-  //to get 10hz-->24000 interrupt-->divisor 208
-  timer1_write(TIMER_DIVISOR);
-#endif
-}
-
-
 void zxDisplaySetup(unsigned char *ram)
 {
   spiSwitchSet(TFT_CS);
-//  zxDisplayTft = TFT_eSPI();
   spiSwitchSet(-1);
 
   zxDisplayMem = ram;
 
   zxDisplayReset();
-  zxDisplayEnableInterrupt();
 }

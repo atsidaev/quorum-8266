@@ -9,7 +9,7 @@
 #include "GlobalDef.h"
 #include "SpiSwitch.h"
 #include "SdNavigation.h"
-
+#include "Hardware/Keyboard.h"
 
 //to add/change demos in rom:
 //-change z80file_demo.h content
@@ -194,11 +194,10 @@ void ICACHE_FLASH_ATTR sdNavigationPrintFStrBig(int x, int y, char *str, int col
   }
 }
 
-
 //stop display scan
 void ICACHE_FLASH_ATTR sdNavigationLockSPI()
 {
-  zxDisplayDisableInterrupt();
+  // zxDisableInterrupt();
   delay(100);//enough to consume an interrupt
   spiSwitchSet(SD_CS);
 }
@@ -209,19 +208,8 @@ void ICACHE_FLASH_ATTR sdNavigationUnlockSPI()
 {
   spiSwitchSet(TFT_CS);
   SPI.setFrequency(SPI_SPEED_TFT);//restore display spi speed
-  zxDisplayEnableInterrupt();
+  //zxEnableInterrupt();
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /*perform a command callbackprocess on the files of the directrory
    from fromindex file. up to maxfiles processed. callbackfilter

@@ -2,6 +2,7 @@
 
 #include "Zxsound.h"
 #include "z80_operations.h"
+#include "Hardware/Keyboard.h"
 
 byte RdZ80(word16 A)        {
   //return (A < ROMSIZE ?  ROM[A]  : RAM[A - ROMSIZE]);
