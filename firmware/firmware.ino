@@ -18,6 +18,7 @@
 #include "SpiSwitch.h"
 #include "SdNavigation.h"
 #include "Hardware/SerialKeyboard.h"
+#include "UI/CommonUI.h"
 
 void process_keyboard_events();
 
@@ -107,42 +108,42 @@ int ICACHE_FLASH_ATTR showJoystick()
   { case 0:
       pJoyKeyVal[0] = pJoyKeyVal[1] = pJoyKeyVal[2] = pJoyKeyVal[3] = pJoyKeyVal[4] = pJoyKeyVal[5] = 0xff;
       cStep++;
-      sdNavigationCls(COLOR_TEXT);
+      UI_Cls(COLOR_TEXT);
       waitforclearkeyb();
       return 0;
     case 1:
       cStep++;
-      sdNavigationPrintFStrBig(0, 0, F("Press UP   "), COLOR_TEXT);
+      UI_PrintFStrBig(0, 0, F("Press UP   "), COLOR_TEXT);
       getKeyb(&pJoyKeyAdd[0], &pJoyKeyVal[0]);
       waitforclearkeyb();
       return 0;
     case 2:
       cStep++;
-      sdNavigationPrintFStrBig(0, 0, F("Press DOWN "), COLOR_TEXT);
+      UI_PrintFStrBig(0, 0, F("Press DOWN "), COLOR_TEXT);
       getKeyb(&pJoyKeyAdd[1], &pJoyKeyVal[1]);
       waitforclearkeyb();
       return 0;
     case 3:
       cStep++;
-      sdNavigationPrintFStrBig(0, 0, F("Press LEFT "), COLOR_TEXT);
+      UI_PrintFStrBig(0, 0, F("Press LEFT "), COLOR_TEXT);
       getKeyb(&pJoyKeyAdd[2], &pJoyKeyVal[2]);
       waitforclearkeyb();
       return 0;
     case 4:
       cStep++;
-      sdNavigationPrintFStrBig(0, 0, F("Press RIGHT"), COLOR_TEXT);
+      UI_PrintFStrBig(0, 0, F("Press RIGHT"), COLOR_TEXT);
       getKeyb(&pJoyKeyAdd[3], &pJoyKeyVal[3]);
       waitforclearkeyb();
       return 0;
     case 5:
       cStep++;
-      sdNavigationPrintFStrBig(0, 0, F("Press FIRE1"), COLOR_TEXT);
+      UI_PrintFStrBig(0, 0, F("Press FIRE1"), COLOR_TEXT);
       getKeyb(&pJoyKeyAdd[4], &pJoyKeyVal[4]);
       waitforclearkeyb();
       return 0;
     case 6:
       cStep = 0;
-      sdNavigationPrintFStrBig(0, 0, F("Press FIRE2"), COLOR_TEXT);
+      UI_PrintFStrBig(0, 0, F("Press FIRE2"), COLOR_TEXT);
       getKeyb(&pJoyKeyAdd[5], &pJoyKeyVal[5]);
       waitforclearkeyb();
       return -1;
@@ -159,47 +160,47 @@ int ICACHE_FLASH_ATTR showMenu()
   if (!bdisplayedmenu)
   {
     bdisplayedmenu = true;
-    sdNavigationCls(COLOR_TEXT);
-    sdNavigationPrintFStrBig(0, 22, F("BRK to exit"), COLOR_TEXT);
-    sdNavigationPrintFStrBig(0, 0, F("1 SD list"), COLOR_TEXT);
-    sdNavigationPrintFStrBig(0, 2, F("2 EEPROM list"), COLOR_TEXT);
-    sdNavigationPrintFStrBig(0, 4, F("3 ZX keyboard"), COLOR_TEXT);
-    sdNavigationPrintFStrBig(0, 6, F("4 CPU"), COLOR_TEXT);
+    UI_Cls(COLOR_TEXT);
+    UI_PrintFStrBig(0, 22, F("BRK to exit"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 0, F("1 SD list"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 2, F("2 EEPROM list"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 4, F("3 ZX keyboard"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 6, F("4 CPU"), COLOR_TEXT);
     switch (z80DelayCycle)
     { case CPUDELAYSLOWEST:// 500
-        sdNavigationPrintFStrBig(12, 6, F("SLOWEST"), COLOR_TEXT);
+        UI_PrintFStrBig(12, 6, F("SLOWEST"), COLOR_TEXT);
         break;
       case CPUDELAYSLOWER:// 1000
-        sdNavigationPrintFStrBig(12, 6, F("SLOWER "), COLOR_TEXT);
+        UI_PrintFStrBig(12, 6, F("SLOWER "), COLOR_TEXT);
         break;
       case CPUDELAYNORMAL:// 5000
-        sdNavigationPrintFStrBig(12, 6, F("NORMAL "), COLOR_TEXT);
+        UI_PrintFStrBig(12, 6, F("NORMAL "), COLOR_TEXT);
         break;
       case CPUDELAYFASTER:// 5000
-        sdNavigationPrintFStrBig(12, 6, F("FASTER "), COLOR_TEXT);
+        UI_PrintFStrBig(12, 6, F("FASTER "), COLOR_TEXT);
         break;
       case CPUDELAYFASTEST:// 50000
-        sdNavigationPrintFStrBig(12, 6, F("FASTEST"), COLOR_TEXT);
+        UI_PrintFStrBig(12, 6, F("FASTEST"), COLOR_TEXT);
         break;
     }
 
-    sdNavigationPrintFStrBig(0, 8, F("5 Timer ..Hz"), COLOR_TEXT);
-    sdNavigationPrintChBig(16, 8, '0' + (timerfreq / 10), COLOR_TEXT);
-    sdNavigationPrintChBig(18, 8, '0' + (timerfreq % 10), COLOR_TEXT);
+    UI_PrintFStrBig(0, 8, F("5 Timer ..Hz"), COLOR_TEXT);
+    UI_PrintChBig(16, 8, '0' + (timerfreq / 10), COLOR_TEXT);
+    UI_PrintChBig(18, 8, '0' + (timerfreq % 10), COLOR_TEXT);
 
-    sdNavigationPrintFStrBig(0, 10, F("6 Sound"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 10, F("6 Sound"), COLOR_TEXT);
     if (soundenabled)
     {
-      sdNavigationPrintFStrBig(16, 10, F("ON"), COLOR_TEXT);
+      UI_PrintFStrBig(16, 10, F("ON"), COLOR_TEXT);
     }
     else
     {
-      sdNavigationPrintFStrBig(16, 10, F("OFF"), COLOR_TEXT);
+      UI_PrintFStrBig(16, 10, F("OFF"), COLOR_TEXT);
     }
-    sdNavigationPrintFStrBig(0, 12, F("7 Joystik setup"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 12, F("7 Joystik setup"), COLOR_TEXT);
 
-    sdNavigationPrintFStrBig(0, 14, F("R Reset"), COLOR_TEXT);
-    sdNavigationPrintFStrBig(0, 16, F("S Save Z80 file"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 14, F("R Reset"), COLOR_TEXT);
+    UI_PrintFStrBig(0, 16, F("S Save Z80 file"), COLOR_TEXT);
 
     //before returning wait for an empty keyb buffer
     waitforclearkeyb();

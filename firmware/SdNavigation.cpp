@@ -11,6 +11,8 @@
 #include "SdNavigation.h"
 #include "Hardware/Keyboard.h"
 
+#include "UI/CommonUI.h"
+
 //to add/change demos in rom:
 //-change z80file_demo.h content
 //-change iromfilesize
@@ -29,12 +31,6 @@ char * pRomFileName[] = {F("Bubble frenzy"), F("Fist RO Fighter"), F("Invasive s
 
 extern void waitforclearkeyb(void);
 
-extern unsigned char RAM[];
-extern const unsigned char ROM[];
-extern unsigned char KEY[];
-extern unsigned char KEMPSTONJOYSTICK;
-
-
 #define LISTLEN 11
 
 int sdNavigationReadFiles = -1; //-1 if nothing available
@@ -46,153 +42,7 @@ int sdNavigationCursor = 0;
 
 
 
-void ICACHE_FLASH_ATTR sdNavigationCls(int col)
-{
-  memset(RAM, 0, 32 * 192);
-  memset(RAM + 32 * 192, col, 32 * 24);
-}
 
-
-//x,y in char coordinates. 0..31 0..23
-//return address of bitmap and color
-void ICACHE_FLASH_ATTR sdNavigationPixMem(int x, int y, int *bmp, int *col)
-{
-  y *= 8;
-  *bmp = x + (  ((y & (8 + 16 + 32)) << 2) + ((y & 7) << 8) + ((y & (64 + 128)) << 5));
-  *col = x + ((192 * 32) + ((y & (255 - 7)) << 2) );
-}
-
-
-//clear a line
-void ICACHE_FLASH_ATTR sdNavigationClearLine(int line, int color)
-{
-  int bmpoffset;
-  int coloffset;
-  sdNavigationPixMem(0, line, &bmpoffset, &coloffset);
-
-  for (int i = 0; i < 8; i++) {
-    memset(RAM + bmpoffset, 0, 32 );
-    bmpoffset += 256;
-  }
-  memset(RAM + coloffset, color, 32);
-
-}
-
-//print a character
-void ICACHE_FLASH_ATTR sdNavigationPrintCh(int x, int y, unsigned char c, int col)
-{
-  const unsigned char *p = ROM + (c * 8 + 15360);//zx spectrum char set
-  int bmpoffset;
-  int coloffset;
-
-  unsigned char row;
-
-  sdNavigationPixMem(x, y, &bmpoffset, &coloffset);
-
-  RAM[coloffset] = col;
-
-  for (int i = 0; i < 8; i++)
-  {
-    row = pgm_read_byte(p);
-    p++;
-    RAM[bmpoffset] = row;
-    bmpoffset += 256;
-  }
-}
-
-
-//print a 2x2 character doubling scanlines and horizontal bits
-void ICACHE_FLASH_ATTR sdNavigationPrintChBig(int x, int y, unsigned char c, int col)
-{
-  const unsigned char *p = ROM + (c * 8 + 15360);
-  int bmpoffset;
-  int coloffset;
-
-  unsigned char row;
-  unsigned char row1;
-  unsigned char row2;
-
-  sdNavigationPixMem(x, y, &bmpoffset, &coloffset);
-
-  RAM[coloffset] = col;
-  RAM[coloffset + 1] = col;
-  RAM[coloffset + 32] = col;
-  RAM[coloffset + 33] = col;
-
-  for (int i = 0; i < 8; i++)
-  {
-
-    if (i == 4)
-    {
-      sdNavigationPixMem(x, y + 1, &bmpoffset, &coloffset);
-    }
-
-    //doubles horizontal pixels
-    row = pgm_read_byte(p);
-    row1 = 0;
-    row2 = 0;
-    row1 |= row & 128 ? (128 + 64) : 0;
-    row1 |= row & 64 ? (32 + 16) : 0;
-    row1 |= row & 32 ? (8 + 4) : 0;
-    row1 |= row & 16 ? (2 + 1) : 0;
-    row2 |= row & 8 ? (128 + 64) : 0;
-    row2 |= row & 4 ? (32 + 16) : 0;
-    row2 |= row & 2 ? (8 + 4) : 0;
-    row2 |= row & 1 ? (2 + 1) : 0;
-
-
-
-    p++;
-    RAM[bmpoffset] = row1;
-    RAM[bmpoffset + 1] = row2;
-    RAM[bmpoffset + 256] = row1;
-    RAM[bmpoffset + 1 + 256] = row2;
-    bmpoffset += 512;
-  }
-}
-
-
-//print a string
-void ICACHE_FLASH_ATTR sdNavigationPrintStr(int x, int y, char *str, int col)
-{
-  for (int i = 0; str[i] && i < 32; i++)
-  {
-    sdNavigationPrintCh(x++, y, str[i], col);
-  }
-}
-
-void ICACHE_FLASH_ATTR sdNavigationPrintStrBig(int x, int y, char *str, int col)
-{
-  for (int i = 0; str[i] && i < 32; i++)
-  {
-    sdNavigationPrintChBig(x, y, str[i], col);
-    x += 2;
-  }
-}
-
-//print a F string
-void ICACHE_FLASH_ATTR sdNavigationPrintFStr(int x, int y, char *str, int col)
-{
-  char c;
-  for (int i = 0; i < 32; i++)
-  {
-    c = pgm_read_byte(((PGM_P)str ) + i);
-    if (c == 0) break;
-    sdNavigationPrintCh(x++, y, c, col);
-  }
-}
-
-void ICACHE_FLASH_ATTR sdNavigationPrintFStrBig(int x, int y, char *str, int col)
-{
-  char c;
-  for (int i = 0; i < 32; i++)
-  {
-    c = pgm_read_byte(((PGM_P)str ) + i);
-    if (c == 0) break;
-    sdNavigationPrintChBig(x, y, c, col);
-    x += 2;
-  }
-}
 
 //stop display scan
 void ICACHE_FLASH_ATTR sdNavigationLockSPI()
@@ -358,17 +208,17 @@ void ICACHE_FLASH_ATTR sdNavigationCallbackPrint(SdFile *file, int indx)
   char str[33];
   int y = 2 * (indx % LISTLEN);
 
-  sdNavigationClearLine(y, COLOR_FILE);
-  sdNavigationClearLine(y + 1, COLOR_FILE);
+  UI_ClearLine(y, COLOR_FILE);
+  UI_ClearLine(y + 1, COLOR_FILE);
 
   sdNavigationPrintNumberBig(indx, COLOR_FILE);
 
   file->getName(str, 14);
-  sdNavigationPrintStrBig(6, y, str, COLOR_FILE);
+  UI_PrintStrBig(6, y, str, COLOR_FILE);
 
   //  int filesize = file->fileSize();
   //  sprintf(str, "%6d", filesize);
-  //  sdNavigationPrintStrBig(26, y, str, COLOR_FILE);
+  //  UI_PrintStrBig(26, y, str, COLOR_FILE);
 
   DEBUG_PRINTLN(str);
 
@@ -379,13 +229,13 @@ void ICACHE_FLASH_ATTR sdNavigationCallbackPrintFromEeprom(int indx)
   char str[33];
   int y = 2 * (indx % LISTLEN);
 
-  sdNavigationClearLine(y, COLOR_FILE);
-  sdNavigationClearLine(y + 1, COLOR_FILE);
+  UI_ClearLine(y, COLOR_FILE);
+  UI_ClearLine(y + 1, COLOR_FILE);
 
   sdNavigationPrintNumberBig(indx, COLOR_FILE);
   memcpy_P(str, pRomFileName[indx], 13);
   str[13] = 0;
-  sdNavigationPrintStrBig(6, y, str, COLOR_FILE);
+  UI_PrintStrBig(6, y, str, COLOR_FILE);
 
 
 }
@@ -437,14 +287,14 @@ void ICACHE_FLASH_ATTR sdNavigationPrintNumber(int indx, int color)
 {
   char str[4];
   sprintf(str, "%3d", indx + 1);
-  sdNavigationPrintStr(0, indx % LISTLEN, str, color);
+  UI_PrintStr(0, indx % LISTLEN, str, color);
 }
 
 void ICACHE_FLASH_ATTR sdNavigationPrintNumberBig(int indx, int color)
 {
   char str[3];
   sprintf(str, "%2d", indx + 1);
-  sdNavigationPrintStrBig(0, 2 * (indx % LISTLEN), str, color);
+  UI_PrintStrBig(0, 2 * (indx % LISTLEN), str, color);
 }
 
 void ICACHE_FLASH_ATTR sdNavigationReset()
@@ -476,8 +326,8 @@ int ICACHE_FLASH_ATTR sdNavigationList(int fromindex, int len, boolean fromEepro
     ulNextCheck = ulNow + 1000;
 
     sdNavigationReset();
-    sdNavigationCls(INK_BLACK);
-    sdNavigationPrintFStr(0, LISTLEN, F("SD not available"), COLOR_ERROR);
+    UI_Cls(INK_BLACK);
+    UI_PrintFStr(0, LISTLEN, F("SD not available"), COLOR_ERROR);
 
     return (-1);
   }
@@ -492,12 +342,12 @@ int ICACHE_FLASH_ATTR sdNavigationList(int fromindex, int len, boolean fromEepro
   {
     for (int i = foundfiles; i < LISTLEN; i++)
     {
-      sdNavigationClearLine(i * 2, COLOR_FILE);
-      sdNavigationClearLine(i * 2 + 1, COLOR_FILE);
+      UI_ClearLine(i * 2, COLOR_FILE);
+      UI_ClearLine(i * 2 + 1, COLOR_FILE);
     }
   }
 
-  sdNavigationPrintFStrBig(0, 22, F("Q/A/BRK/ENT/joy"), COLOR_TEXT);
+  UI_PrintFStrBig(0, 22, F("Q/A/BRK/ENT/joy"), COLOR_TEXT);
 
 
   return foundfiles;
@@ -696,9 +546,9 @@ int sdNavigationGetFileName(char *filename)
   char c;
 
 
-  sdNavigationCls(INK_BLACK);
-  sdNavigationPrintFStrBig(0, 0, F("Type file name"), COLOR_TEXT);
-  sdNavigationPrintFStrBig(0, 2, F("without ext"), COLOR_TEXT);
+  UI_Cls(INK_BLACK);
+  UI_PrintFStrBig(0, 0, F("Type file name"), COLOR_TEXT);
+  UI_PrintFStrBig(0, 2, F("without ext"), COLOR_TEXT);
 
   waitforclearkeyb();
 
@@ -710,8 +560,8 @@ int sdNavigationGetFileName(char *filename)
       waitforclearkeyb();
       return -1;
     }
-    sdNavigationPrintChBig(ioffset * 2, 6, '_', COLOR_TEXT + COLOR_BLINK);
-    if (ioffset < 15) sdNavigationPrintChBig(ioffset * 2 + 2, 6, ' ', COLOR_TEXT);
+    UI_PrintChBig(ioffset * 2, 6, '_', COLOR_TEXT + COLOR_BLINK);
+    if (ioffset < 15) UI_PrintChBig(ioffset * 2 + 2, 6, ' ', COLOR_TEXT);
     c = getPressedCharacter();
 
     if (c == '\b' && ioffset) ioffset--; //delete
@@ -721,7 +571,7 @@ int sdNavigationGetFileName(char *filename)
           (c >= 'A' && c <= 'Z') ||
           c == '_' || c == '-'))
     {
-      sdNavigationPrintChBig(ioffset * 2 , 6, c, COLOR_TEXT);
+      UI_PrintChBig(ioffset * 2 , 6, c, COLOR_TEXT);
       filename[ioffset++] = c;
     }
 

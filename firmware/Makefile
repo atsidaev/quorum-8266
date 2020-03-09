@@ -50,6 +50,7 @@ LDFLAGS += ${LIBRARY_PATH} --start-group -T eagle.app.v6.ld ${BUILD_DIR}/arduino
 # Project sources
 CXX_SRC := ${BUILD_DIR}/firmware.cpp SdNavigation.cpp SpiSwitch.cpp Zxdisplay.cpp Zxsound.cpp ShowKeyboard.cpp Z80filedecoder.cpp Zxkeyboard.cpp
 CXX_SRC += Hardware/Keyboard.cpp Hardware/SerialKeyboard.cpp
+CXX_SRC += UI/CommonUI.cpp
 C_SRC += z80_operations.c
 
 # User libraries
