@@ -1,5 +1,6 @@
 /firmware/.build
 /firmware/*.o
+/firmware/*/*.o
 /firmware/Zxrom.h
 /firmware/quorum8266.bin
 /firmware/quorum8266.elf
