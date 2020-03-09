@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 extern unsigned char RAM[];
-extern const unsigned char ROM[];
+extern const uint32_t ROM[];
 extern unsigned char KEY[];
 extern unsigned char KEMPSTONJOYSTICK;
 

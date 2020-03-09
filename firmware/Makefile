@@ -50,7 +50,7 @@ LDFLAGS += ${LIBRARY_PATH} --start-group -T eagle.app.v6.ld ${BUILD_DIR}/arduino
 # Project sources
 CXX_SRC := ${BUILD_DIR}/firmware.cpp SdNavigation.cpp SpiSwitch.cpp Zxdisplay.cpp Zxsound.cpp ShowKeyboard.cpp Z80filedecoder.cpp Zxkeyboard.cpp
 CXX_SRC += Hardware/Keyboard.cpp Hardware/SerialKeyboard.cpp
-CXX_SRC += UI/CommonUI.cpp
+CXX_SRC += UI/CommonUI.cpp UI/MainMenu.cpp
 C_SRC += z80_operations.c
 
 # User libraries
@@ -131,12 +131,12 @@ ${BUILD_DIR}/arduino.ar: ${ARDUINO_SRC_TMP:=.o}
 	${AR} cru $@ $^
 
 clean:
-	rm quorum8266.elf quorum8266.bin Zxrom.h ${ROMS} || true
+	rm quorum8266.elf quorum8266.bin quorum8266.elf.map Zxrom.h ${ROMS} || true
 	rm -rf ${BUILD_DIR}
 	find -name '*.o' -delete
 
 quorum8266.elf: ${CXX_SRC:=.o} ${C_SRC:=.o} ${CXX_LIB_OBJ} ${C_LIB_OBJ} ${BUILD_DIR}/arduino.ar ${ARDUINO_INTERNAL_LIBS_TMP:=.o}
-	${LD} -o $@ $^ ${LDFLAGS}
+	${LD} -o $@ $^ ${LDFLAGS} -Map=${@:=.map}
 	size quorum8266.elf | awk '{print "RAM Used:", $$2 + $$3; }' | tail -n1
 
 quorum8266.bin: quorum8266.elf

@@ -4,12 +4,12 @@
 #include "z80_operations.h"
 #include "Hardware/Keyboard.h"
 
-byte RdZ80(word16 A)        {
+byte ICACHE_RAM_ATTR RdZ80(word16 A)        {
   //return (A < ROMSIZE ?  ROM[A]  : RAM[A - ROMSIZE]);
   return (A < ROMSIZE ? pgm_read_byte(ROM + A) : RAM[A - ROMSIZE]);
 }
 
-void WrZ80(word16 A, byte V) {
+void ICACHE_RAM_ATTR WrZ80(word16 A, byte V) {
 //  if (A >= ROMSIZE && A < (ROMSIZE + RAMSIZE)) RAM[A - ROMSIZE] = V;
   if (A >= ROMSIZE) RAM[A - ROMSIZE] = V;
 }

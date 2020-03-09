@@ -36,7 +36,7 @@ void ICACHE_FLASH_ATTR UI_ClearLine(int line, int color)
 //print a character
 void ICACHE_FLASH_ATTR UI_PrintCh(int x, int y, unsigned char c, int col)
 {
-  const unsigned char *p = ROM + (c * 8 + 15360);//zx spectrum char set
+  const uint32_t *p = ROM + (c * 8 + 15360);//zx spectrum char set
   int bmpoffset;
   int coloffset;
 
@@ -58,7 +58,7 @@ void ICACHE_FLASH_ATTR UI_PrintCh(int x, int y, unsigned char c, int col)
 //print a 2x2 character doubling scanlines and horizontal bits
 void ICACHE_FLASH_ATTR UI_PrintChBig(int x, int y, unsigned char c, int col)
 {
-  const unsigned char *p = ROM + (c * 8 + 15360);
+  const uint32_t *p = ROM + (c * 8 + 15360);
   int bmpoffset;
   int coloffset;
 
