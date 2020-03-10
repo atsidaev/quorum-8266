@@ -11,10 +11,8 @@
 #include "Zxsound.h"
 #include "Zxkeyboard.h"
 #include "GlobalDef.h"
-#include "ShowKeyboard.h"
 #include "lib/Z80/Z80.h"
 #include "z80_operations.h"
-#include "Z80filedecoder.h"
 #include "SpiSwitch.h"
 #include "SdNavigation.h"
 #include "Hardware/SerialKeyboard.h"
@@ -22,20 +20,14 @@
 
 void process_keyboard_events();
 
-static char ongoingtask = EMUTASK_EMULATOR; //0=emulator,1=file browser,2=display keyboard,3=load demo from rom
-
 unsigned char RAM[RAMSIZE];//48k
-unsigned char CACHE[ZXSCREENSIZE]; //used for video backup and file decoding
 const uint32_t ROM[ROMSIZE] PROGMEM = {
 #include "zxrom.h" //original rom
 };
 
 Z80 state;//emulator status
-int z80DelayCycle = 1;
 
 char zxInterruptPending = 0;//enabled by interrupt routine
-int timerfreq = 50; //default
-unsigned char soundenabled = 1; //default sound on
 
 void zxEnableInterrupt();
 void zxDisableInterrupt();

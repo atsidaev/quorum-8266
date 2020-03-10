@@ -24,6 +24,7 @@ extern unsigned char *pJoyKeyAdd[6] ;
 extern unsigned char  pJoyKeyVal[6] ;
 //up down left right f1 f2
 
+void RefreshScreen();
 
 /*
   1 2 3 4 5     f7fe   6 7 8 9 0       effe
@@ -238,7 +239,8 @@ void ICACHE_FLASH_ATTR waitforclearkeyb()
 {
   for (;;)
   {
-    yield();
+    RefreshScreen();
+    
     if (
       KEY[0] == 0xff &&
       KEY[1] == 0xff &&
@@ -259,7 +261,8 @@ void ICACHE_FLASH_ATTR getKeyb(unsigned char **p, unsigned char *v)
 {
   for (;;)
   {
-    yield();
+    RefreshScreen();
+    
     for (int i = 0; i < 8; i++)
     {
       if (KEY[i] != 0xff)
@@ -371,7 +374,7 @@ char ICACHE_FLASH_ATTR getPressedCharacter()
   { //wait for release of the pressed key
     for (;;)
     {
-      yield();
+      RefreshScreen();
       // DEBUG_PRINTLN("wait");
       // DEBUG_PRINTLN((volatile unsigned char)KEY[i]);
       // DEBUG_PRINTLN(i);

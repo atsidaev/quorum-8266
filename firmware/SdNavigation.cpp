@@ -30,19 +30,13 @@ char * pRomFileName[] = {F("Bubble frenzy"), F("Fist RO Fighter"), F("Invasive s
 
 
 extern void waitforclearkeyb(void);
+void RefreshScreen();
 
 #define LISTLEN 11
 
 int sdNavigationReadFiles = -1; //-1 if nothing available
 int sdNavigationIndex = 0;
 int sdNavigationCursor = 0;
-
-
-
-
-
-
-
 
 //stop display scan
 void ICACHE_FLASH_ATTR sdNavigationLockSPI()
@@ -236,13 +230,7 @@ void ICACHE_FLASH_ATTR sdNavigationCallbackPrintFromEeprom(int indx)
   memcpy_P(str, pRomFileName[indx], 13);
   str[13] = 0;
   UI_PrintStrBig(6, y, str, COLOR_FILE);
-
-
 }
-
-
-
-
 
 boolean ICACHE_FLASH_ATTR sdNavigationCallbackFilter(SdFile *file, int indx)
 {
@@ -333,7 +321,10 @@ int ICACHE_FLASH_ATTR sdNavigationList(int fromindex, int len, boolean fromEepro
   }
 
   ulNextCheck = 0; //no timeout
-
+  
+  // Clear screen including possible "SD not available" message
+  UI_Cls(INK_BLACK);
+  
   //update video
   //
   //clear remaining lines
@@ -555,6 +546,7 @@ int sdNavigationGetFileName(char *filename)
 
   for (;;)
   {
+    RefreshScreen();
     if (checkKeybBreak())
     {
       waitforclearkeyb();
