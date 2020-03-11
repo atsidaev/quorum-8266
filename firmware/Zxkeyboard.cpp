@@ -13,13 +13,12 @@
 #include "GlobalDef.h"
 #include "SpiSwitch.h"
 #include "Hardware/Keyboard.h"
+#include "z80_operations.h"
 
 boolean keyboardCheckAny(unsigned char *pBuffer, int len);
 boolean keyboardCheckKeyStatusRowCol(unsigned char *pBuffer, int iRow, int iCol, unsigned char  * off, unsigned char * mask);
 boolean keyboardCheckKeyStatus(unsigned char *pBuffer, unsigned char off, unsigned char mask);
 
-extern unsigned char KEY[8];
-extern unsigned char KEMPSTONJOYSTICK;
 extern unsigned char *pJoyKeyAdd[6] ;
 extern unsigned char  pJoyKeyVal[6] ;
 //up down left right f1 f2

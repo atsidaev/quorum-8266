@@ -3,11 +3,7 @@
 #include "ShowKeyboard.h"
 #include "GlobalDef.h"
 #include "Zxkeyboard.h"
-
-extern unsigned char RAM[];
-extern const unsigned char ROM[];
-extern unsigned char KEY[];
-extern unsigned char KEMPSTONJOYSTICK;
+#include "z80_operations.h"
 
 extern void waitforclearkeyb(void);
 

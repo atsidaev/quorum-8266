@@ -531,7 +531,7 @@ int ICACHE_FLASH_ATTR sdNavigationFileSave(char *filename) {
 
 
 
-int sdNavigationGetFileName(char *filename)
+int ICACHE_FLASH_ATTR sdNavigationGetFileName(char *filename)
 {
   int ioffset = 0;
   char c;

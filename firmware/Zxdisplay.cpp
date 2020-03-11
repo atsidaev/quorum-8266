@@ -126,7 +126,7 @@ void zxDisplayWriteSerial(int i)
   xxyyyzzz->xxyyy000->xxyyy00000
 
 */
-void zxDisplayScanPixMem(uint32_t y)
+void ICACHE_RAM_ATTR zxDisplayScanPixMem(uint32_t y)
 {
   zxDisplayScanPixel = zxDisplayMem + (  ((y & (8 + 16 + 32)) << 2) + ((y & 7) << 8) + ((y & (64 + 128)) << 5));
   zxDisplayScanColor = zxDisplayMem + ((192 * 32) + ((y & (255 - 7)) << 2) );
@@ -134,7 +134,7 @@ void zxDisplayScanPixMem(uint32_t y)
 
 
 //convert zx color to tft color with attribure found at *zxDisplayScanColor
-void zxDisplayScanCol(uint32_t *forecol, uint32_t *backcol)
+void ICACHE_RAM_ATTR zxDisplayScanCol(uint32_t *forecol, uint32_t *backcol)
 {
 
   uint8_t col = *zxDisplayScanColor;
@@ -169,7 +169,7 @@ void zxDisplayScanCol(uint32_t *forecol, uint32_t *backcol)
 
 //every 32 bit register hold 2 pixel ,16 bits each
 //there are 4 banks of 4 regs
-void zxDisplayOutput(uint8_t pixels, uint32_t forecol, uint32_t backcol, uint8_t regbank)
+void ICACHE_RAM_ATTR zxDisplayOutput(uint8_t pixels, uint32_t forecol, uint32_t backcol, uint8_t regbank)
 {
   uint32_t forecolup = forecol << 16; //shift color in 2 upper bytes
   uint32_t backcolup = backcol << 16;
@@ -205,7 +205,7 @@ void zxDisplayOutput(uint8_t pixels, uint32_t forecol, uint32_t backcol, uint8_t
 }
 
 //copy buffer to spi reg
-void zxDisplayOutputReg()
+void ICACHE_RAM_ATTR zxDisplayOutputReg()
 {
 
   SPI1W0 = zxDisplayBuffer[0];
@@ -229,7 +229,7 @@ void zxDisplayOutputReg()
 
 
 //copy 32 pixels to video
-void zxDisplayScan()
+void ICACHE_RAM_ATTR zxDisplayScan()
 {
   uint8_t pixels = 0;
   uint32_t forecol = 0;

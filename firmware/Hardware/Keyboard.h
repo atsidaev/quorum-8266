@@ -1,7 +1,8 @@
 #pragma once
 
-extern unsigned char KEY[8];
-extern unsigned char KEMPSTONJOYSTICK;
+#include <stdint.h>
+
+#include "../z80_operations.h"
 
 extern unsigned char *pJoyKeyAdd[6];
 extern unsigned char  pJoyKeyVal[6];
