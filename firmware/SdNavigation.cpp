@@ -315,15 +315,12 @@ int ICACHE_FLASH_ATTR sdNavigationList(int fromindex, int len, boolean fromEepro
 
     sdNavigationReset();
     UI_Cls(INK_BLACK);
-    UI_PrintFStr(0, LISTLEN, F("SD not available"), COLOR_ERROR);
+    UI_PrintFStrBig(0, 22, F("SD not available"), COLOR_ERROR);
 
     return (-1);
   }
 
   ulNextCheck = 0; //no timeout
-  
-  // Clear screen including possible "SD not available" message
-  UI_Cls(INK_BLACK);
   
   //update video
   //
@@ -338,7 +335,7 @@ int ICACHE_FLASH_ATTR sdNavigationList(int fromindex, int len, boolean fromEepro
     }
   }
 
-  UI_PrintFStrBig(0, 22, F("Q/A/BRK/ENT/joy"), COLOR_TEXT);
+  UI_PrintFStrBig(0, 22, F("Q/A/BRK/ENT/joy "), COLOR_TEXT);
 
 
   return foundfiles;
